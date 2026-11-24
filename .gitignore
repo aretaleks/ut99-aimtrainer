@@ -1,0 +1,31 @@
+# This folder is a full UT99 workspace (game copies, demo recordings, logs).
+# Only the project's own files are in the repository: everything else is ignored.
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/docs/
+
+!/AimTrainer/
+/AimTrainer/*
+!/AimTrainer/Classes/
+!/AimTrainer/Tools/
+!/AimTrainer/Launcher/
+!/AimTrainer/Map/
+/AimTrainer/Tools/paths.local.ini
+/AimTrainer/Tools/__pycache__/
+
+!/ATRecorder/
+/ATRecorder/*
+!/ATRecorder/Classes/
+
+# the game files a release needs (built or generated here)
+!/System/
+/System/*
+!/System/AimTrainer.int
+!/System/AimTrainerMoves.ini
+!/Maps/
+/Maps/*
+!/Maps/DM-AimRange.unr
+
+!/PlayAimTrainer.bat

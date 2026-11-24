@@ -1,0 +1,649 @@
+{
+ "title": "Aim Trainer Range",
+ "author": "Aim Trainer",
+ "grid": 16,
+ "default_texture": "",
+ "bsp": {
+  "mode": "good",
+  "balance": 15,
+  "portal_bias": 70
+ },
+ "gametype": "dm",
+ "next_id": 33,
+ "elements": [
+  {
+   "id": 1,
+   "kind": "brush",
+   "params": {
+    "shape": "prism",
+    "csg": "subtract",
+    "location": [
+     -256,
+     0,
+     640.0
+    ],
+    "points": [
+     [
+      3968,
+      -2048
+     ],
+     [
+      4352,
+      -1664
+     ],
+     [
+      4352,
+      1664
+     ],
+     [
+      3968,
+      2048
+     ],
+     [
+      -3968,
+      2048
+     ],
+     [
+      -4352,
+      1664
+     ],
+     [
+      -4352,
+      -1664
+     ],
+     [
+      -3968,
+      -2048
+     ]
+    ],
+    "height": 1280,
+    "texture": "",
+    "face_textures": {
+     "bottom": "UTtech2.Floor.rClfFlr1x",
+     "top": "UTtech1.Ceiling.bmCeiling",
+     "sides": "UTtech1.Base.panelbase"
+    },
+    "group": "",
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 2,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3072.0,
+     -2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 3,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3072.0,
+     2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 4,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2048.0,
+     -2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 5,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2048.0,
+     2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 6,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1024.0,
+     -2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 7,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1024.0,
+     2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 8,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     0.0,
+     -2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 9,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     0.0,
+     2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 10,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     1024.0,
+     -2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 11,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     1024.0,
+     2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 12,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     2048.0,
+     -2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 13,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     2048.0,
+     2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 14,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     3072.0,
+     -2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 15,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     3072.0,
+     2016.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 16,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "semisolid",
+    "location": [
+     -3824.0,
+     0.0,
+     8.0
+    ],
+    "size": [
+     32,
+     2048,
+     16
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 17,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3840,
+     -1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 18,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3840,
+     1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 19,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2304,
+     -1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 20,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2304,
+     1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 21,
+   "kind": "light",
+   "params": {
+    "location": [
+     -768,
+     -1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 22,
+   "kind": "light",
+   "params": {
+    "location": [
+     -768,
+     1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 23,
+   "kind": "light",
+   "params": {
+    "location": [
+     768,
+     -1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 24,
+   "kind": "light",
+   "params": {
+    "location": [
+     768,
+     1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 25,
+   "kind": "light",
+   "params": {
+    "location": [
+     2304,
+     -1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 26,
+   "kind": "light",
+   "params": {
+    "location": [
+     2304,
+     1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 27,
+   "kind": "light",
+   "params": {
+    "location": [
+     3712,
+     -1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 28,
+   "kind": "light",
+   "params": {
+    "location": [
+     3712,
+     1152,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 29,
+   "kind": "zone",
+   "params": {
+    "type": "normal",
+    "name": "Range",
+    "location": [
+     0,
+     0,
+     640.0
+    ],
+    "ambient_brightness": 24
+   }
+  },
+  {
+   "id": 30,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     0,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 31,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     -192,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 32,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     192,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  }
+ ]
+}
