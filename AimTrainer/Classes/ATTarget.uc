@@ -79,6 +79,7 @@ var float  AimTime;
 var float  ReactCooldown;
 var bool   bCrouch;         // ducked this tick (walks at walking speed, can't dodge)
 var float  CrouchLeft;      // synthetic crouch: seconds left
+var float  DuckFraction;    // 0 standing .. 1 fully crouched: shrinks the hitbox (see AdjustHitLocation)
 var bool   bDodgeAfterCrouch;
 
 // timing tables for synthetic movement (index 1 is used; the others are kept for tuning)
@@ -177,6 +178,14 @@ function Tick( float Delta )
 
 	if ( Game == None || Enemy == None || Enemy.bDeleteMe )
 		return;
+
+	// hitbox crouch, as IG+ does it: 0.25 s down, 0.1 s up, full size in the air
+	if ( bCrouch && Physics == PHYS_Walking && !bDead )
+		DuckFraction = FMin(DuckFraction + Delta / 0.25, 1.0);
+	else
+		DuckFraction = FMax(DuckFraction - Delta / 0.1, 0.0);
+	if ( Game.bTestDuck )
+		DuckFraction = 1.0;   // test: the hitbox always fully crouched
 
 	if ( bReplaceMe )
 	{
@@ -1045,6 +1054,41 @@ simulated function PlayFootStep()
 // Damage, death, respawn
 // ============================================================================
 
+// Hitbox, as on IG+ servers (rxut's next-netcode build, default settings):
+// standing it is the plain collision cylinder; crouching, its top comes down
+// to (1 - 0.7 * DuckFraction) * CollisionHeight above the centre, so only
+// about 65% of the height can be hit and nothing above the crouched model.
+// (Stock UT lowers a crouching player's top too; this target isn't a
+// TournamentPlayer, so it has to do it itself.) Called from Pawn.TraceShot,
+// which hitscan weapons use; returning false lets the shot go on past.
+function bool AdjustHitLocation( out vector HitLocation, vector TraceDir )
+{
+	local float AdjZ, MaxZ;
+	local vector Delta;
+
+	MaxZ = Location.Z + (1.0 - 0.7 * DuckFraction) * CollisionHeight;
+	if ( Game != None && Game.bTestMode && DuckFraction > 0 )
+		Log("ATTEST hitbox duck=" $ DuckFraction @ "hitz=" $ (HitLocation.Z - Location.Z) @ "maxz=" $ (MaxZ - Location.Z) @ "over=" $ (HitLocation.Z > MaxZ), 'ATTest');
+	if ( HitLocation.Z <= MaxZ )
+		return true;
+	if ( TraceDir.Z >= 0 )
+		return false;
+	TraceDir = Normal(TraceDir);
+	AdjZ = (MaxZ - HitLocation.Z) / TraceDir.Z;
+	HitLocation.Z = MaxZ;
+	HitLocation.X = HitLocation.X + TraceDir.X * AdjZ;
+	HitLocation.Y = HitLocation.Y + TraceDir.Y * AdjZ;
+	Delta = (HitLocation - Location) * vect(1,1,0);
+	return (Delta dot Delta) <= CollisionRadius * CollisionRadius;
+}
+
+// Height above the centre where a Sniper headshot starts (IG+: BodyHeight 0.66,
+// lowered by 0.7 of the height when crouched).
+function float HeadshotZ()
+{
+	return (0.66 - 0.70 * DuckFraction) * CollisionHeight;
+}
+
 function TakeDamage( int Dmg, Pawn InstigatedBy, vector HitLocation, vector Momentum, name DamageType )
 {
 	local int Actual, Effective;
@@ -1054,10 +1098,27 @@ function TakeDamage( int Dmg, Pawn InstigatedBy, vector HitLocation, vector Mome
 	if ( bDead || bHidden || Game == None )
 		return;
 
+	// Sniper Rifle: IG+'s headshot line (higher than stock UT's 0.62, and lower
+	// on a crouching target) with IG+'s default damage, 100 head / 45 body.
+	if ( InstigatedBy != None && SniperRifle(InstigatedBy.Weapon) != None
+		&& (DamageType == 'shot' || DamageType == 'decapitated') )
+	{
+		if ( HitLocation.Z - Location.Z > HeadshotZ() )
+		{
+			Dmg = 100;
+			DamageType = 'decapitated';
+		}
+		else
+		{
+			Dmg = 45;
+			DamageType = 'shot';
+		}
+	}
+
 	Actual = Game.ReduceDamage(Dmg, DamageType, self, InstigatedBy);
 	if ( Actual <= 0 )
 		return;
-	bHead = DamageType == 'decapitated' || (HitLocation.Z - Location.Z > 0.62 * CollisionHeight);
+	bHead = DamageType == 'decapitated' || (HitLocation.Z - Location.Z > HeadshotZ());
 
 	BloodOffset = 0.2 * CollisionRadius * Normal(HitLocation - Location);
 	BloodOffset.Z *= 0.5;

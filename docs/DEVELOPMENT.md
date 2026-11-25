@@ -71,6 +71,8 @@ Extra URL options:
 - `?ATMoves=0|1|2`, `?ATStance=0|1`, `?ATTargets=1-4`, `?ATWeapon=<class>`
   override settings;
 - `?ATCrouch=20` makes crouches 20x more frequent.
+- `?ATTestDuck=1` keeps every target's hitbox fully crouched (the model
+  doesn't crouch); the log shows each shot tested against it.
 
 ## Movement clips from demos
 
@@ -116,6 +118,8 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
   - a strafe to one side lasts at most 0.9 s up to `MaxStrafeTime`;
   - in Fixed position, targets stay downrange within about 45°; on DM-AimRange
     they do in free roam too (from wherever the trainee stands, down +X).
+- Hitbox: IG+'s crouch rule in `AdjustHitLocation` (called by
+  `Pawn.TraceShot`) and IG+'s Sniper headshot line in `HeadshotZ`.
 - Animations follow `TournamentPlayer.PlayRunning`, but a running animation is
   only chosen again at the end of its cycle or after 0.2 s the other way, so
   quick taps don't flip the body.

@@ -89,7 +89,7 @@ var float TTKSum;           // Duel: sum of time-to-kill
 var int   TTKCount;
 var bool  bNewBest;
 var int   ResultRank;       // 1-based rank of the last result in its table, 0 = not placed
-var bool  bTestMode, bTestJoined, bTestMenu, bTestMenuOpened, bTestEsc, bTestFire;
+var bool  bTestMode, bTestJoined, bTestMenu, bTestMenuOpened, bTestEsc, bTestFire, bTestDuck;
 var float TestFireTime, TestEscTime;
 var int   TestEscStep;
 var bool  bHookChecked, bStartMenuShown;
@@ -151,6 +151,7 @@ event InitGame( string Options, out string Error )
 	bTestMenu = ParseOption(Options, "ATTestMenu") == "1";
 	bTestEsc = ParseOption(Options, "ATTestEsc") == "1";
 	bTestFire = ParseOption(Options, "ATTestFire") == "1";
+	bTestDuck = ParseOption(Options, "ATTestDuck") == "1";
 	ClampSettings();
 
 	Moves = new class'ATMoves';

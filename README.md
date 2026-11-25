@@ -63,6 +63,13 @@ best 10 results for each combination of settings are kept in
 `System\AimTrainer.ini`. There's no camera shake or bullet shells, so nothing
 moves your view but your mouse.
 
+Hitboxes match IG+ servers (rxut's next-netcode build, default settings):
+standing, the target is UT's plain collision cylinder. A crouching target's
+hitbox shrinks to about 65% of its height (over 0.25 s, back up in 0.1 s), so
+shots just above a crouched model miss. Sniper headshots start at 0.66 of the
+height (stock UT: 0.62), lower on a crouching target; 100 damage for a
+headshot, 45 for the body.
+
 Console commands for key binds: `mutate at help`.
 
 **DM-AimRange** is a long, flat, evenly lit hall with the firing position at
