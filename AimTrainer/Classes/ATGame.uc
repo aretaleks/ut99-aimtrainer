@@ -87,6 +87,7 @@ var bool  bHookChecked, bStartMenuShown;
 var bool  bFixedSet, bFixedApplied;   // Fixed position: firing spot taken / player movement locked
 var vector FixedSpot;
 var int   FixedYaw;
+var bool  bRangeMap;      // on DM-AimRange: downrange is +X (yaw 0) wherever the trainee stands
 var float TestLogTime;
 var string StatusMsg;       // short message for the HUD (settings changes etc)
 var float  StatusTime;
@@ -113,6 +114,8 @@ event InitGame( string Options, out string Error )
 	// UT deletes non-player pawns as they spawn when this is on, and fresh
 	// installs have it on: the targets are non-player pawns.
 	bNoMonsters = false;
+	// DM-AimRange: targets stay down the range (+X) in free roam too
+	bRangeMap = InStr(Caps(string(Level)), "DM-AIMRANGE.") == 0;
 
 	// URL options override the ini for this run, e.g. ?ATWeapon=Botpack.ShockRifle?ATTargets=2
 	S = ParseOption(Options, "ATWeapon");
@@ -687,6 +690,26 @@ function ATTarget SpawnTarget( int Slot )
 }
 
 // A spot on the floor at the range's distance, roughly where the trainee looks,
+// The direction targets keep to, if any: the firing direction in Fixed
+// position, down the range on DM-AimRange in free roam. Origin is where
+// the sector starts (the firing spot, or the trainee).
+function bool DownrangeAxis( out vector Origin, out int Yaw )
+{
+	if ( Stance == 1 && bFixedSet )
+	{
+		Origin = FixedSpot;
+		Yaw = FixedYaw;
+		return true;
+	}
+	if ( bRangeMap && Trainee != None )
+	{
+		Origin = Trainee.Location;
+		Yaw = 0;
+		return true;
+	}
+	return false;
+}
+
 // with a clear line of sight. Falls back to navigation points.
 function bool FindTargetSpot( out vector Spot )
 {
@@ -697,15 +720,19 @@ function bool FindTargetSpot( out vector Spot )
 	local Actor HitActor;
 	local NavigationPoint N, Best;
 	local float BestScore, Score;
+	local vector AxisOrigin;
+	local int AxisYaw;
+	local bool bAxis;
 
+	bAxis = DownrangeAxis(AxisOrigin, AxisYaw);
 	MinD = RangeMin[Range];
 	MaxD = RangeMax[Range];
 	Eye = Trainee.Location + Trainee.EyeHeight * vect(0,0,1);
 
 	for ( Try = 0; Try < 40; Try++ )
 	{
-		if ( Stance == 1 && bFixedSet )
-			R.Yaw = FixedYaw + (FRand() - 0.5) * (6000 + Try * 200);
+		if ( bAxis )
+			R.Yaw = AxisYaw + (FRand() - 0.5) * (6000 + Try * 200);
 		else
 			R.Yaw = Trainee.ViewRotation.Yaw + (FRand() - 0.5) * (8000 + Try * 900);
 		R.Pitch = 0;

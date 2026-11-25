@@ -49,7 +49,7 @@ highscores in `System\AimTrainer.ini` stay).
 | Setting | Choices |
 |---|---|
 | Mode | **Duel**: targets have 100 health, die and come back elsewhere. **Tracking**: they never die; score is damage over time |
-| Position | **Fixed**: you stand at the firing line and targets move downrange (within about 45°). **Free roam**: move around as in a game |
+| Position | **Fixed**: you stand at the firing line and targets move downrange (within about 45°). **Free roam**: move around as in a game (on DM-AimRange targets still appear and stay down the range from you; on other maps they appear where you look) |
 | Movement | **Recorded**: real players (default). **Synthetic**: made-up movement. **Mixed**: both |
 | Range | Close, Mid, Far |
 

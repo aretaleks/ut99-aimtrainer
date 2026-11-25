@@ -170,7 +170,8 @@ function Freeze( float T )
 
 function Tick( float Delta )
 {
-	local vector F, R, World, Away, Axis, Side, ToSpot;
+	local vector F, R, World, Away, Axis, Side, ToSpot, AxisOrigin;
+	local int AxisYaw;
 	local float ApF, ApR, MinSide;
 	local float Dist, Speed, MinKeep, MaxKeep;
 
@@ -247,12 +248,13 @@ function Tick( float Delta )
 	}
 	if ( VSize(Away) > 2500 )
 		Anchor = Location;
-	// Fixed position: stay downrange, within +-45 degrees of the firing direction.
-	if ( Game.Stance == 1 && Game.bFixedSet )
+	// Fixed position (or anywhere on DM-AimRange): stay downrange, within +-45
+	// degrees of the firing direction.
+	if ( Game.DownrangeAxis(AxisOrigin, AxisYaw) )
 	{
-		Axis = vector(rot(0,1,0) * Game.FixedYaw);
+		Axis = vector(rot(0,1,0) * AxisYaw);
 		Side = Axis cross vect(0,0,1);
-		ToSpot = Location - Game.FixedSpot;
+		ToSpot = Location - AxisOrigin;
 		ToSpot.Z = 0;
 		// a soft wall at the sector's edge: outward movement is turned back every
 		// frame (strafing alone can't fix a diagonal retreat)
