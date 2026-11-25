@@ -6,7 +6,7 @@ class ATMenuClient extends UWindowDialogClientWindow;
 
 var UWindowComboControl ModeCombo, WeaponCombo, RangeCombo, MovesCombo;
 var UWindowComboControl TimeCombo, TargetsCombo, ModelCombo, SkinCombo, FaceCombo, TeamCombo;
-var UWindowCheckbox HitSoundCheck, HeadshotCheck;
+var UWindowCheckbox HitSoundCheck, HeadshotCheck, StreakCheck;
 var UWindowSmallButton StartButton, CloseButton, LoadButton, UTMenuButton, MainMenuButton, ExitButton;
 var UWindowCheckbox MenuAtStartCheck;
 var UWindowComboControl StanceCombo;
@@ -119,16 +119,11 @@ function Created()
 	TeamCombo.AddItem("None", "255");
 	Y += 24;
 
-	HitSoundCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', 10, Y, (WinWidth - 30) / 2, 1));
-	HitSoundCheck.SetText("Hit sound");
-	HitSoundCheck.SetHelpText("Beep when you hit a target.");
-	HitSoundCheck.SetFont(F_Normal);
-	HitSoundCheck.Align = TA_Left;
-	HeadshotCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', WinWidth / 2 + 5, Y, (WinWidth - 30) / 2, 1));
-	HeadshotCheck.SetText("Headshot announcer");
-	HeadshotCheck.SetHelpText("\"Head Shot!!\" like in UT, with the weapons that can headshot (Sniper Rifle, Ripper).");
-	HeadshotCheck.SetFont(F_Normal);
-	HeadshotCheck.Align = TA_Left;
+	HitSoundCheck = AddCheck("Hit sound", "Beep when you hit a target.", Y);
+	Y += 20;
+	HeadshotCheck = AddCheck("Headshot announcer", "\"Head Shot!!\" like in UT, with the weapons that can headshot (Sniper Rifle, Ripper).", Y);
+	Y += 20;
+	StreakCheck = AddCheck("Kill streak sound", "A chime that climbs with each quick kill in a row (kills less than 1.5 s apart, from the 2nd kill).", Y);
 	Y += 20;
 	MenuAtStartCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', 10, Y, WinWidth - 20, 1));
 	MenuAtStartCheck.SetText("Open this window at start");
@@ -145,6 +140,18 @@ function Created()
 
 	LoadCurrent();
 	bUpdating = false;
+}
+
+function UWindowCheckbox AddCheck( string Text, string Help, float Y )
+{
+	local UWindowCheckbox C;
+
+	C = UWindowCheckbox(CreateControl(class'UWindowCheckbox', 10, Y, WinWidth - 20, 1));
+	C.SetText(Text);
+	C.SetHelpText(Help);
+	C.SetFont(F_Normal);
+	C.Align = TA_Left;
+	return C;
 }
 
 function UWindowSmallButton AddButton( string Text, string Help, int Slot, float Y )
@@ -215,6 +222,7 @@ function LoadCurrent()
 	Select(TeamCombo, string(G.TargetTeam));
 	HitSoundCheck.bChecked = G.bHitSound;
 	HeadshotCheck.bChecked = G.bHeadshotAnnouncer;
+	StreakCheck.bChecked = G.bStreakSound;
 	MenuAtStartCheck.bChecked = G.bMenuAtStart;
 	Select(StanceCombo, string(G.Stance));
 	if ( G.TargetClass == "" || ModelCombo.FindItemIndex2(G.TargetClass, true) < 0 )
@@ -394,6 +402,8 @@ function Notify( UWindowDialogControl C, byte E )
 		G.bHitSound = HitSoundCheck.bChecked;
 	else if ( C == HeadshotCheck )
 		G.bHeadshotAnnouncer = HeadshotCheck.bChecked;
+	else if ( C == StreakCheck )
+		G.bStreakSound = StreakCheck.bChecked;
 	else if ( C == MenuAtStartCheck )
 		G.bMenuAtStart = MenuAtStartCheck.bChecked;
 	else if ( C == StanceCombo )

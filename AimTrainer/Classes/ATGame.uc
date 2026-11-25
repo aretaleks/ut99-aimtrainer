@@ -12,6 +12,12 @@
 //=============================================================================
 class ATGame extends DeathMatchPlus config(AimTrainer);
 
+// kill-streak chimes (made by Tools\make_sounds.py)
+#exec AUDIO IMPORT FILE="Sounds\Streak1.wav" NAME="Streak1"
+#exec AUDIO IMPORT FILE="Sounds\Streak2.wav" NAME="Streak2"
+#exec AUDIO IMPORT FILE="Sounds\Streak3.wav" NAME="Streak3"
+#exec AUDIO IMPORT FILE="Sounds\Streak4.wav" NAME="Streak4"
+
 // ---- Settings --------------------------------------------------------------
 var() config int    Mode;          // 0 = Duel (targets die and respawn), 1 = Tracking (targets never die)
 var() config int    Stance;        // 0 = free roam, 1 = fixed: stand in place, targets downrange
@@ -27,6 +33,8 @@ var() config int    TargetTeam;    // 0 red, 1 blue, 255 no team colours
 var() config int    TargetHealth;  // Duel mode health
 var() config bool   bHitSound;
 var() config bool   bHeadshotAnnouncer; // "Head Shot!!" like UT on decapitating hits (sniper, ripper)
+var() config bool   bStreakSound;   // a chime that climbs with each kill of a streak (from the 2nd kill)
+var() config float  StreakWindow;   // seconds between kills to keep a streak (UT's multikills: 3), counted only while a target is up
 var() config string HitSoundName;
 var() config float  RespawnDelay;
 var() config float  CrouchFrequency;
@@ -88,7 +96,11 @@ var bool  bHookChecked, bStartMenuShown;
 var bool  bFixedSet, bFixedApplied;   // Fixed position: firing spot taken / player movement locked
 var vector FixedSpot;
 var int   FixedYaw;
-var bool  bRangeMap;      // on DM-AimRange: downrange is +X (yaw 0) wherever the trainee stands
+var int   Streak;          // kills in the current streak
+var float StreakTime;      // seconds (with a target up) since the last kill
+var float StreakSoundAt;   // Level.TimeSeconds of the last streak chime
+var Sound StreakSounds[4];
+var bool  bRangeMap;     // on DM-AimRange: downrange is +X (yaw 0) wherever the trainee stands
 var float TestLogTime;
 var string StatusMsg;       // short message for the HUD (settings changes etc)
 var float  StatusTime;
@@ -286,6 +298,11 @@ function Tick( float Delta )
 		Trainee = None;
 		return;
 	}
+
+	// The streak clock only runs while there is a target to shoot, so a
+	// respawn delay doesn't break a streak.
+	if ( Streak > 0 && AnyTargetUp() )
+		StreakTime += Delta;
 	if ( bTestMode && Trainee.IsInState('PlayerWaiting') && !bTestJoined )
 	{
 		bTestJoined = true;
@@ -577,6 +594,7 @@ function StartCountdown()
 	PhaseTime = 0;
 	LastCount = -1;
 	Shots = 0; Hits = 0; Kills = 0; Headshots = 0; Damage = 0;
+	Streak = 0;
 	TTKSum = 0; TTKCount = 0;
 	bNewBest = false;
 	ResultRank = 0;
@@ -827,8 +845,41 @@ function AnnounceHeadshot()
 		Trainee.ReceiveLocalizedMessage(class'DecapitationMessage');
 }
 
+function bool AnyTargetUp()
+{
+	local int i;
+
+	for ( i = 0; i < 4; i++ )
+		if ( Targets[i] != None && !Targets[i].bDead && !Targets[i].bHidden )
+			return true;
+	return false;
+}
+
+// The trainee killed a target. Kills less than StreakWindow apart make a
+// streak; from the 2nd kill on, each one plays a higher, brighter chime
+// (the 5th and later all play the top one). The first kill plays nothing, so
+// with targets always on the range the chime stays a reward, not a constant.
+function KillStreak()
+{
+	if ( Streak > 0 && StreakTime <= StreakWindow )
+		Streak++;
+	else
+		Streak = 1;
+	StreakTime = 0;
+	if ( bTestMode )
+		Log("ATTEST streak=" $ Streak, 'ATTest');
+	if ( Streak >= 2 && bStreakSound && Trainee != None )
+	{
+		Trainee.ClientPlaySound(StreakSounds[Min(Streak - 2, 3)], , true);
+		StreakSoundAt = Level.TimeSeconds;
+	}
+}
+
 function PlayHitSound()
 {
+	// the streak chime replaces the hit sound on that kill
+	if ( StreakSoundAt == Level.TimeSeconds )
+		return;
 	if ( bHitSound && HitSnd != None && Trainee != None )
 		Trainee.ClientPlaySound(HitSnd, , true);
 }
@@ -1081,7 +1132,7 @@ function Command( string Cmd, PlayerPawn Sender )
 		Sender.ClientMessage("  mutate at mode [duel|tracking]       mutate at weapon [next|prev|<class>]");
 		Sender.ClientMessage("  mutate at range [close|mid|far]");
 		Sender.ClientMessage("  mutate at time <seconds>  mutate at targets <1-4>  mutate at moves [recorded|synthetic|mixed]");
-		Sender.ClientMessage("  mutate at model [random|<class>]  mutate at team [red|blue|none]  mutate at hitsound  mutate at headshot");
+		Sender.ClientMessage("  mutate at model [random|<class>]  mutate at team [red|blue|none]  mutate at hitsound  mutate at headshot  mutate at streak");
 		Sender.ClientMessage("  mutate at scores | resetscores");
 		return;
 	}
@@ -1182,6 +1233,11 @@ function Command( string Cmd, PlayerPawn Sender )
 		bHeadshotAnnouncer = !bHeadshotAnnouncer;
 		bChanged = true;
 	}
+	else if ( Verb ~= "streak" )
+	{
+		bStreakSound = !bStreakSound;
+		bChanged = true;
+	}
 	else if ( Verb ~= "weapon" )
 	{
 		TrainWeapon = PickWeapon(Arg);
@@ -1229,7 +1285,7 @@ function UWindowWindow CreateMenuWindow( UWindowRootWindow Root )
 	if ( bTestMode )
 		Log("ATTEST menu window created", 'ATTest');
 	return Root.CreateWindow(class'ATMenuWindow', Max(0, (Root.WinWidth - 420) / 2),
-		Max(0, (Root.WinHeight - 450) / 2), 420, 450, None, true);
+		Max(0, (Root.WinHeight - 490) / 2), 420, 490, None, true);
 }
 
 // Esc opens the Aim Trainer window instead of UT's menu (see ATEscHook).
@@ -1349,6 +1405,12 @@ defaultproperties
 	TargetHealth=100
 	bHitSound=True
 	bHeadshotAnnouncer=True
+	bStreakSound=True
+	StreakWindow=1.5
+	StreakSounds(0)=Sound'Streak1'
+	StreakSounds(1)=Sound'Streak2'
+	StreakSounds(2)=Sound'Streak3'
+	StreakSounds(3)=Sound'Streak4'
 	HitSoundName="UnrealShare.Eightball.SeekLock"
 	RespawnDelay=0.4
 	CrouchFrequency=1.0

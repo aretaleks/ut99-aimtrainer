@@ -135,6 +135,8 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
   - `ATMutator`: the `mutate at` commands.
 - `ATRecorder\Classes\ATRecConsole.uc`: the demo recording console.
 - `AimTrainer\Tools`: the build, release, test, recording and clip scripts.
+- `AimTrainer\Sounds`: the kill-streak chimes, made by `Tools\make_sounds.py`
+  and imported into `AimTrainer.u` when it is compiled.
 - `AimTrainer\Map`: the range map's build script (UnrealEd MCP map generator)
   and its project file.
 - `System\AimTrainer.int`, `System\AimTrainerMoves.ini`, `Maps\DM-AimRange.unr`:
