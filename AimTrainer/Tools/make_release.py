@@ -81,6 +81,9 @@ Headshot announcer  "Head Shot!!" as in UT, with the weapons that can
 Kill streak sound   a chime that climbs with each kill in a row. Kills
                     must be less than 1.5 s apart (time with no target up
                     doesn't count); the first kill plays nothing.
+
+Hitboxes match IG+ servers: a crouching target's hitbox shrinks to about
+65% of its height, and Sniper headshots start at 0.66 of the height.
 Movement  Recorded: real players (default). Synthetic: made up. Mixed.
 
 Score is the damage you deal (a kill = 100). Accuracy is hits / shots.
