@@ -63,7 +63,8 @@ Esc            the Aim Trainer window (instead of UT's menu):
                  map, weapon (Enhanced Shock Rifle / Sniper / ...), mode,
                  range, position, movement, session length, number of
                  targets, target model (random or a fixed model with skin
-                 and face), team colour, hit sound.
+                 and face), team colour, hit sound, headshot announcer,
+                 kill streak sound.
                  Buttons: Start, UT Menu (UT's own menu), Main Menu,
                  Exit UT, Resume.
 Fire           start a session (3-2-1), and again after the results.
@@ -72,7 +73,14 @@ Mode      Duel: targets die and come back elsewhere.
           Tracking: they never die; score damage over time.
 Position  Fixed: you stand at the firing line and the targets move
           downrange (default).
-          Free roam: move around as in a normal game.
+          Free roam: move around as in a normal game (on DM-AimRange
+          the targets still stay down the range).
+
+Headshot announcer  "Head Shot!!" as in UT, with the weapons that can
+                    headshot (Sniper Rifle, Ripper).
+Kill streak sound   a chime that climbs with each kill in a row. Kills
+                    must be less than 1.5 s apart (time with no target up
+                    doesn't count); the first kill plays nothing.
 Movement  Recorded: real players (default). Synthetic: made up. Mixed.
 
 Score is the damage you deal (a kill = 100). Accuracy is hits / shots.
