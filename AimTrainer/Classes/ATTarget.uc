@@ -1079,6 +1079,8 @@ function TakeDamage( int Dmg, Pawn InstigatedBy, vector HitLocation, vector Mome
 	{
 		Game.TargetHit(self, Effective, bHead, bKilled, Level.TimeSeconds - LifeStart);
 		Game.PlayHitSound();
+		if ( DamageType == 'decapitated' )
+			Game.AnnounceHeadshot();
 	}
 
 	if ( bKilled )

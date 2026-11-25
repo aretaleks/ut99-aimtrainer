@@ -6,7 +6,7 @@ class ATMenuClient extends UWindowDialogClientWindow;
 
 var UWindowComboControl ModeCombo, WeaponCombo, RangeCombo, MovesCombo;
 var UWindowComboControl TimeCombo, TargetsCombo, ModelCombo, SkinCombo, FaceCombo, TeamCombo;
-var UWindowCheckbox HitSoundCheck;
+var UWindowCheckbox HitSoundCheck, HeadshotCheck;
 var UWindowSmallButton StartButton, CloseButton, LoadButton, UTMenuButton, MainMenuButton, ExitButton;
 var UWindowCheckbox MenuAtStartCheck;
 var UWindowComboControl StanceCombo;
@@ -119,11 +119,16 @@ function Created()
 	TeamCombo.AddItem("None", "255");
 	Y += 24;
 
-	HitSoundCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', 10, Y, WinWidth - 20, 1));
+	HitSoundCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', 10, Y, (WinWidth - 30) / 2, 1));
 	HitSoundCheck.SetText("Hit sound");
 	HitSoundCheck.SetHelpText("Beep when you hit a target.");
 	HitSoundCheck.SetFont(F_Normal);
 	HitSoundCheck.Align = TA_Left;
+	HeadshotCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', WinWidth / 2 + 5, Y, (WinWidth - 30) / 2, 1));
+	HeadshotCheck.SetText("Headshot announcer");
+	HeadshotCheck.SetHelpText("\"Head Shot!!\" like in UT, with the weapons that can headshot (Sniper Rifle, Ripper).");
+	HeadshotCheck.SetFont(F_Normal);
+	HeadshotCheck.Align = TA_Left;
 	Y += 20;
 	MenuAtStartCheck = UWindowCheckbox(CreateControl(class'UWindowCheckbox', 10, Y, WinWidth - 20, 1));
 	MenuAtStartCheck.SetText("Open this window at start");
@@ -209,6 +214,7 @@ function LoadCurrent()
 	Select(TargetsCombo, string(G.NumTargets));
 	Select(TeamCombo, string(G.TargetTeam));
 	HitSoundCheck.bChecked = G.bHitSound;
+	HeadshotCheck.bChecked = G.bHeadshotAnnouncer;
 	MenuAtStartCheck.bChecked = G.bMenuAtStart;
 	Select(StanceCombo, string(G.Stance));
 	if ( G.TargetClass == "" || ModelCombo.FindItemIndex2(G.TargetClass, true) < 0 )
@@ -386,6 +392,8 @@ function Notify( UWindowDialogControl C, byte E )
 	}
 	else if ( C == HitSoundCheck )
 		G.bHitSound = HitSoundCheck.bChecked;
+	else if ( C == HeadshotCheck )
+		G.bHeadshotAnnouncer = HeadshotCheck.bChecked;
 	else if ( C == MenuAtStartCheck )
 		G.bMenuAtStart = MenuAtStartCheck.bChecked;
 	else if ( C == StanceCombo )

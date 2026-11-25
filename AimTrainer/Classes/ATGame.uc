@@ -26,6 +26,7 @@ var() config string TargetFace;    // face for TargetClass ("" = none)
 var() config int    TargetTeam;    // 0 red, 1 blue, 255 no team colours
 var() config int    TargetHealth;  // Duel mode health
 var() config bool   bHitSound;
+var() config bool   bHeadshotAnnouncer; // "Head Shot!!" like UT on decapitating hits (sniper, ripper)
 var() config string HitSoundName;
 var() config float  RespawnDelay;
 var() config float  CrouchFrequency;
@@ -387,8 +388,10 @@ function TestTick( float Delta )
 		{
 			TestFireTime = 0;
 			// aim at target 0 now and then so some shots hit
+			// (at the body or the head)
 			if ( Targets[0] != None && !Targets[0].bHidden && FRand() < 0.5 )
-				Trainee.ViewRotation = rotator(Targets[0].Location - (Trainee.Location + Trainee.EyeHeight * vect(0,0,1)));
+				Trainee.ViewRotation = rotator(Targets[0].Location + int(FRand() < 0.5) * 0.8 * Targets[0].CollisionHeight * vect(0,0,1)
+					- (Trainee.Location + Trainee.EyeHeight * vect(0,0,1)));
 			i = 0;
 			foreach AllActors(class'UT_ShellCase', Shell)
 				i++;
@@ -814,6 +817,16 @@ function TargetHit( ATTarget T, int Dmg, bool bHead, bool bKilled, float LifeTim
 	}
 }
 
+// UT's own headshot announcement (voice and "Head Shot!!" on screen). The
+// weapons that can decapitate send damage type 'decapitated', as in UT.
+function AnnounceHeadshot()
+{
+	if ( bTestMode )
+		Log("ATTEST headshot announced=" $ bHeadshotAnnouncer, 'ATTest');
+	if ( bHeadshotAnnouncer && Trainee != None )
+		Trainee.ReceiveLocalizedMessage(class'DecapitationMessage');
+}
+
 function PlayHitSound()
 {
 	if ( bHitSound && HitSnd != None && Trainee != None )
@@ -1068,7 +1081,7 @@ function Command( string Cmd, PlayerPawn Sender )
 		Sender.ClientMessage("  mutate at mode [duel|tracking]       mutate at weapon [next|prev|<class>]");
 		Sender.ClientMessage("  mutate at range [close|mid|far]");
 		Sender.ClientMessage("  mutate at time <seconds>  mutate at targets <1-4>  mutate at moves [recorded|synthetic|mixed]");
-		Sender.ClientMessage("  mutate at model [random|<class>]  mutate at team [red|blue|none]  mutate at hitsound");
+		Sender.ClientMessage("  mutate at model [random|<class>]  mutate at team [red|blue|none]  mutate at hitsound  mutate at headshot");
 		Sender.ClientMessage("  mutate at scores | resetscores");
 		return;
 	}
@@ -1162,6 +1175,11 @@ function Command( string Cmd, PlayerPawn Sender )
 	else if ( Verb ~= "hitsound" )
 	{
 		bHitSound = !bHitSound;
+		bChanged = true;
+	}
+	else if ( Verb ~= "headshot" )
+	{
+		bHeadshotAnnouncer = !bHeadshotAnnouncer;
 		bChanged = true;
 	}
 	else if ( Verb ~= "weapon" )
@@ -1330,6 +1348,7 @@ defaultproperties
 	TargetTeam=0
 	TargetHealth=100
 	bHitSound=True
+	bHeadshotAnnouncer=True
 	HitSoundName="UnrealShare.Eightball.SeekLock"
 	RespawnDelay=0.4
 	CrouchFrequency=1.0

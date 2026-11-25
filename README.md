@@ -39,7 +39,8 @@ highscores in `System\AimTrainer.ini` stay).
   - movement, session length and number of targets;
   - target model (random, or a fixed model with its skin and face; installed
     custom models are listed too);
-  - team colour and hit sound.
+  - team colour, hit sound and the headshot announcer ("Head Shot!!" as in UT,
+    with the weapons that can headshot: Sniper Rifle and Ripper).
 
   Buttons: Start, UT Menu (UT's own menu), Main Menu, Exit UT, Resume.
 - **Fire** starts a session: 3-2-1, then the timer runs (60 s by default).
