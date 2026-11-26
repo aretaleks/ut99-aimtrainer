@@ -39,6 +39,7 @@ FLOOR = "UTtech2.Floor.rClfFlr1x"
 WALL = "UTtech1.Base.panelbase"
 CEIL = "UTtech1.Ceiling.bmCeiling"
 TRIM = "UTtech1.Base.metals5"
+HAZARD = "Mine.Trim.MWARN2"   # yellow/black hatching (stock UT), for the firing lines
 
 # hall: x is downrange, the firing position is at the -x end
 X0, X1, Y, H = -4608, 4096, 2048, 1280
@@ -114,9 +115,11 @@ def starts(cy, z=0):
         print(S.add_player_start(FIRE_X, cy + y, z, yaw=0))
 
 
-def fire_line(cy, z=0, d=256):
-    # a low line on the floor at the firing position (semisolid strip, 16 high)
-    print(S.add_box([FIRE_X + d, cy - 1024, z], [FIRE_X + d + 32, cy + 1024, z + 16], csg="semisolid", texture=TRIM))
+def fire_line(cy, z=0, x=FIRE_X + 256):
+    # the firing line: a thin yellow/black hatched strip across nearly the whole
+    # hall, 24 deep and 4 high (a step anyone walks over)
+    print(S.add_box([x, cy - (Y - 148), z], [x + 24, cy + (Y - 148), z + 4], csg="semisolid",
+                    texture=HAZARD, tex_scale=0.5))
 
 
 def high_ground(cy):
@@ -153,10 +156,10 @@ def airborne(cy):
     x, y = LEDGE_PAD
     print(S.add_kicker(FIELD_X + x, cy + y, top, [FIELD_X, cy + 600, 0], apex=128, pad="inset",
                        light=True, light_hue=HUE_LEDGE))
-    # the firing spots: a short line in front of each, three starts on it
+    # the firing spots: a line in front of each, three starts behind it
     for d in AIR_SPOTS:
         fx = FIELD_X - d
-        print(S.add_box([fx + 96, cy - 256, 0], [fx + 128, cy + 256, 16], csg="semisolid", texture=TRIM))
+        fire_line(cy, 0, fx + 128)   # in view, and clear of the lift pad at Close
         for y in (0, -128, 128):
             print(S.add_player_start(fx, cy + y, 0, yaw=0))
 
@@ -165,7 +168,8 @@ def main():
     proj = os.path.join(GEN, "projects", NAME + ".json")
     if os.path.exists(proj):
         os.remove(proj)
-    print(S.new_map(NAME, title="Aim Trainer Range", author="Aim Trainer", gametype="dm"))
+    # a 4 uu grid for the thin firing lines (everything else is on 16)
+    print(S.new_map(NAME, title="Aim Trainer Range", author="Aim Trainer", gametype="dm", grid=4))
 
     # Flat Range
     hall(0)
@@ -177,7 +181,7 @@ def main():
     # High Ground
     hall(HALL_DY, PIT)
     high_ground(HALL_DY)
-    fire_line(HALL_DY, DECK_Z, 32)
+    fire_line(HALL_DY, DECK_Z, FIRE_X + DECK_D - 24)   # along the deck's edge
     lights(HALL_DY)
     print(S.add_zone([0, HALL_DY, H / 2], type="normal", name="HighGround", ambient_brightness=24))
     starts(HALL_DY, DECK_Z)

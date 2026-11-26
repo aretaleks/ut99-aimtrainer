@@ -80,8 +80,8 @@ headshot, 45 for the body.
 Console commands for key binds: `mutate at help`.
 
 **DM-AimRange** has three long, evenly lit halls, one per course, each with
-the firing position at one end and pillars along the walls every 1024 uu for
-judging distance. Range means the same distance everywhere: on High Ground
+the firing position at one end, marked by a yellow/black hatched line across
+the hall, and pillars along the walls every 1024 uu for judging distance. Range means the same distance everywhere: on High Ground
 there are platforms in each range band, on Airborne you stand at that distance
 from the pad field. Each course keeps its own best scores.
 
