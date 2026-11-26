@@ -94,6 +94,8 @@ Kill streak sound   a chime that climbs with each kill in a row. Kills
 
 Hitboxes match IG+ servers: a crouching target's hitbox shrinks to about
 65% of its height, and Sniper headshots start at 0.66 of the height.
+If you play with InstaGibPlus, the InstaGib beam looks the way you set it
+up in IG+ (read from System\\InstaGibPlus.ini); otherwise it is stock.
 Movement  Recorded: real players (default). Synthetic: made up. Mixed.
 
 Score is the damage you deal (a kill = 100). Accuracy is hits / shots.

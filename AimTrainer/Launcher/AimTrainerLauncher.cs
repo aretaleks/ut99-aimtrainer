@@ -27,8 +27,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Aim Trainer for Unreal Tournament")]
 [assembly: AssemblyDescription("Installs and starts the Aim Trainer for UT99 (OldUnreal 469)")]
 [assembly: AssemblyProduct("Aim Trainer")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]
 
 static class Program
 {
