@@ -103,6 +103,13 @@ System\\AimTrainer.ini.
 Console commands, if you like binding keys: mutate at help
 
 
+OTHER UT FOLDER
+---------------
+The exe remembers the Unreal Tournament folder. To use another one, hold
+Shift while starting AimTrainer.exe (or run "AimTrainer.exe choose", or
+drop the UT folder onto AimTrainer.exe) and choose the folder again.
+
+
 UNINSTALL
 ---------
 AimTrainer.exe uninstall   (removes the four files; settings and

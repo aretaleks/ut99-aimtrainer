@@ -32,6 +32,10 @@ Windows may warn that the exe is from an unknown publisher (it isn't signed):
 choose "More info" > "Run anyway". You can also start the trainer from the game:
 Practice Session, game type "Aim Trainer", any DM or CTF map.
 
+The exe remembers the Unreal Tournament folder. To install into another one,
+**hold Shift while starting AimTrainer.exe** (or run `AimTrainer.exe choose`,
+or drop the UT folder onto the exe) and choose the folder again.
+
 `AimTrainer.exe uninstall` removes the four files again (your settings and
 highscores in `System\AimTrainer.ini` stay).
 

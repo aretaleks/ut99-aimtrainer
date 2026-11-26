@@ -8,7 +8,8 @@
 //   3. starts UT in the Aim Trainer on DM-AimRange.
 //
 //   AimTrainer.exe                  install / update, then play
-//   AimTrainer.exe "D:\Games\UT"    use this UT folder
+//   AimTrainer.exe "D:\Games\UT"    use this UT folder (or drop the folder on the exe)
+//   AimTrainer.exe choose           choose the UT folder again (or hold Shift when starting it)
 //   AimTrainer.exe install          install / update only
 //   AimTrainer.exe uninstall        remove the four files again
 //   add "quiet" to install / uninstall without any messages (for scripts)
@@ -47,7 +48,7 @@ static class Program
         Application.EnableVisualStyles();
         try
         {
-            bool uninstall = false, installOnly = false;
+            bool uninstall = false, installOnly = false, choose = false;
             string pathArg = null;
             foreach (string a in args)
             {
@@ -55,10 +56,14 @@ static class Program
                 if (t == "uninstall") uninstall = true;
                 else if (t == "install") installOnly = true;
                 else if (t == "quiet") Quiet = true;
+                else if (t == "choose" || t == "change") choose = true;
                 else pathArg = a;
             }
+            // Shift held while starting: choose the UT folder again
+            if ((Control.ModifierKeys & Keys.Shift) != 0 && !Quiet)
+                choose = true;
 
-            string ut = FindUT(pathArg);
+            string ut = (choose && pathArg == null) ? AskForUT() : FindUT(pathArg);
             if (ut == null)
                 return 1;
 
@@ -67,8 +72,17 @@ static class Program
                 Uninstall(ut);
                 return 0;
             }
-            if (!CheckVersion(ut))
-                return 1;
+            while (true)
+            {
+                DialogResult v = CheckVersion(ut);
+                if (v == DialogResult.Yes)
+                    break;
+                if (v != DialogResult.No)
+                    return 1;
+                ut = AskForUT();      // No: another folder
+                if (ut == null)
+                    return 1;
+            }
             int changed = Install(ut);
             SaveUT(ut);
             if (installOnly)
@@ -271,7 +285,8 @@ static class Program
     // The game writes its version to its log ("Init: Version: 469"). The trainer
     // is built and tested on 469f, and players report 469b works too; only a
     // game older than 469 (436, 451) gets a warning, since it is untested there.
-    static bool CheckVersion(string ut)
+    // Yes: go on; No: choose another folder; Cancel: stop.
+    static DialogResult CheckVersion(string ut)
     {
         string sys = Path.Combine(ut, "System");
         FileInfo newest = null;
@@ -283,7 +298,7 @@ static class Program
         }
         catch { }
         if (newest == null)
-            return true;
+            return DialogResult.Yes;
         string version = null, revision = null;
         try
         {
@@ -299,16 +314,17 @@ static class Program
         }
         catch { }
         if (version == null)
-            return true;
+            return DialogResult.Yes;
         bool ok = string.CompareOrdinal(version, "469") >= 0;
         if (ok || Quiet)
-            return true;
+            return DialogResult.Yes;
         string found = version + (revision ?? "");
         return MessageBox.Show(
             "The Aim Trainer is tested on Unreal Tournament 469f (players report 469b works too).\n" +
-            "Your game says it is " + found + ", which is older and untested: it may not load.\n" +
-            "OldUnreal's 469 patches are at oldunreal.com.\n\nInstall anyway?",
-            Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes;
+            "The game in\n\n" + ut + "\n\nsays it is " + found + ", which is older and untested: it may not load.\n" +
+            "OldUnreal's 469 patches are at oldunreal.com.\n\n" +
+            "Yes: install there anyway.\nNo: choose another Unreal Tournament folder.",
+            Title, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
     }
 
     // ---------------------------------------------------------------- install
