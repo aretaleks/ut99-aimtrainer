@@ -79,6 +79,12 @@ shots just above a crouched model miss. Sniper headshots start at 0.66 of the
 height (stock UT: 0.62), lower on a crouching target; 100 damage for a
 headshot, 45 for the body.
 
+If you play with InstaGibPlus, the InstaGib rifle's beam and impact look the
+way you set them up in IG+ (beam type, size, duration, fade, light, impact
+effect), read from `System\InstaGibPlus.ini` of the UT you run the trainer
+in. The beam's colour is the team opposite the targets (red targets: blue
+beam). Without IG+ settings the beam is stock.
+
 Console commands for key binds: `mutate at help`.
 
 **DM-AimRange** has three long, evenly lit halls, one per course, each with

@@ -169,7 +169,12 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
   - `ATHUD`: the HUD;
   - `ATMenuWindow` / `ATMenuClient`: the Aim Trainer window;
   - `ATEscHook`: Esc opens the window;
-  - `ATSuperShockRifle`: the InstaGib rifle reporting its shots;
+  - `ATSuperShockRifle`: the InstaGib rifle reporting its shots, and drawing
+    its beam and impact with the player's IG+ beam settings when that UT has
+    them (`ATIGPlusSettings` reads `[ClientSettings]` of `InstaGibPlus.ini`,
+    created with no outer so the section is found; `ATBeam` is one beam
+    segment). Our own code after IG+'s behaviour, stock Botpack assets only;
+    no `InstaGibPlus.ini` (no `bInitialized`) means the stock beam;
   - `ATMutator`: the `mutate at` commands.
 - `ATRecorder\Classes\ATRecConsole.uc`: the demo recording console.
 - `AimTrainer\Tools`: the build, release, test, recording and clip scripts.
