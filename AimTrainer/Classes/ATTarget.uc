@@ -1167,8 +1167,7 @@ function DieNow( name DamageType )
 	local Carcass C;
 	local float R;
 
-	if ( Die != None )
-		PlaySound(Die, SLOT_Talk, 3.0, true, 1500, 1.0);
+	// no death scream: with targets dying all session it's just noise
 	R = FRand();
 	if ( R < 0.25 )
 		PlayAnim('Dead2', , 0.1);
