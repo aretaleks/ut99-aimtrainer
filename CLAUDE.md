@@ -147,8 +147,9 @@ in a way no human does, it's wrong.
   grounded ones and count as misses).
 - Players dodge to a pad, they don't walk: dodge after dodge with UT's
   0.35 s lock plus a human delay.
-- Every kick has a new arc (low and fast or high and slow, straight or
-  diagonal), at most 1400 uu/s sideways.
+- Every kick has a new arc (straight or diagonal, mostly low and fast), at
+  most 1400 uu/s sideways. Mostly horizontal flights across the field; the
+  boost pad (up) is rare, and no arc goes very high (apex at most ~550).
 
 **Animation**
 - Running animations play at a fixed rate of 1.0. In quick A-D strokes the

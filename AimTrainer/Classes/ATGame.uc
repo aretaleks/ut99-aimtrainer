@@ -109,6 +109,7 @@ var Kicker BoostPad;      // Airborne: the pad in the middle of the field (its c
 var int    PlacedRange;   // Airborne: the range whose firing spot the trainee was put at
 var float  DeckEndX;      // High Ground: where the trainee's firing deck ends (no targets before it)
 var() config float MaxKickSpeed;  // Airborne: fastest sideways speed of a pad's arc (uu/s)
+var() config float BoostChance;   // Airborne: how often a target goes for the boost pad when it is the nearest
 var float TestLogTime, TestNoSpotLog;
 var string StatusMsg;       // short message for the HUD (settings changes etc)
 var float  StatusTime;
@@ -614,17 +615,22 @@ function bool IsCrossPad( Kicker K )
 }
 
 // Airborne: the nearest pad it can get to from where it stands (one on its
-// own floor), other than Skip (the one that just kicked it).
+// own floor), other than Skip (the one that just kicked it). The boost pad
+// only now and then (BoostChance): flights across the field are the main thing.
 function Kicker NearestPad( vector V, float FeetZ, optional Kicker Skip )
 {
 	local int i;
 	local float D, BestD;
 	local Kicker Best;
+	local bool bBoost;
 
+	bBoost = FRand() < BoostChance;
 	BestD = 1000000;
 	for ( i = 0; i < NumPads; i++ )
 	{
 		if ( Abs(Pads[i].Location.Z - 40 - FeetZ) > 48 || Pads[i] == Skip )
+			continue;
+		if ( Pads[i] == BoostPad && !bBoost )
 			continue;
 		D = VSize((Pads[i].Location - V) * vect(1,1,0));
 		if ( D < BestD )
@@ -690,17 +696,17 @@ function AimKick( Kicker K )
 		Kind = "boost";
 		Dir.Yaw = Rand(65536);
 		To = From + vector(Dir) * (120 + FRand() * 230);
-		Apex = 600 + FRand() * 300;
+		Apex = 350 + FRand() * 200;
 	}
-	else if ( R < 0.75 )
+	else if ( R < 0.9 )
 	{
 		Kind = "across";
-		P = OtherSidePad(K, R < 0.45, false);
+		P = OtherSidePad(K, R < 0.55, false);
 		if ( P == None )
 			return;
 		To = From + (P.Location - From) * (0.5 + FRand() * 0.4);
 		To.X += (FRand() - 0.5) * 400;
-		Apex = 64 + FRand() * FRand() * 640;
+		Apex = 64 + FRand() * FRand() * 400;
 	}
 	else
 	{
@@ -709,7 +715,7 @@ function AimKick( Kicker K )
 		if ( P == None )
 			return;
 		To = P.Location + Normal((BoostPad.Location.Y - P.Location.Y) * vect(0,1,0)) * (100 + FRand() * 250);
-		Apex = 450 + FRand() * 350;
+		Apex = 300 + FRand() * 200;
 	}
 	To.Z = From.Z;   // all pads are on the floor
 	G = Abs(K.Region.Zone.ZoneGravity.Z);
@@ -1769,6 +1775,7 @@ defaultproperties
 	Range=1
 	Course=0
 	MaxKickSpeed=1400
+	BoostChance=0.2
 	Duration=60
 	NumTargets=1
 	MoveSource=0

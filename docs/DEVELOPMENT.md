@@ -142,8 +142,10 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
     floor (not the one that kicked it last), dodge after dodge (0.35 s lock after each landing plus
     0.03-0.18 s), facing the pad; just before, `ATGame.AimKick` sets that
     pad's `KickVelocity` by pad type: the boost pad nearly straight up (apex
-    600-900, landing 120-350 away), a cross pad across (straight or
-    diagonal) or on a high lob. Random apex, at most `MaxKickSpeed`
+    350-550, landing 120-350 away), a cross pad across (90%, straight or
+    diagonal, apex 64-464, mostly low) or on a lob (apex 300-500). The boost
+    pad is only taken 20% of the times it is the nearest (`BoostChance`), so
+    most flights go across. At most `MaxKickSpeed`
     (1400 uu/s) sideways. In the air from a pad it presses no keys and faces
     the trainee again. Only then can it be hit (`Hittable`): shots go through
     a target on the floor, so they count as misses. The band and sector rules
