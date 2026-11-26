@@ -88,6 +88,7 @@ var float  LedgeTurns;       // High Ground: times it turned back at an edge (te
 
 // Airborne (kicker pads)
 var Kicker PadGoal;          // the pad it is running to
+var Kicker LastPad;          // the pad that kicked it last (the next one is another)
 var float  PadWait;          // seconds on the ground before it heads for a pad
 var bool   bPadAimed;        // the pad's arc has been set for this run
 var bool   bKicked;          // in the air from a pad: no keys, the arc is the pad's
@@ -471,11 +472,10 @@ function Tick( float Delta )
 // Courses
 // ============================================================================
 
-// Standing where a fall is possible: on High Ground's platforms, or on
-// Airborne's ledge.
+// Standing where a fall is possible: on High Ground's platforms.
 function bool OnHighFloor()
 {
-	return Game.ActiveCourse() == 1 || (Game.ActiveCourse() == 2 && Location.Z - CollisionHeight > 100);
+	return Game.ActiveCourse() == 1;
 }
 
 // Airborne: only a target flying from a pad can be hit; on the floor (or in a
@@ -582,6 +582,7 @@ function PadMove( float Delta, out vector World )
 		if ( PadGoal != None && Velocity.Z > 250 && VSize((PadGoal.Location - Location) * vect(1,1,0)) < 150 )
 		{
 			bKicked = true;
+			LastPad = PadGoal;
 			PadGoal = None;
 			bPadAimed = false;
 		}
@@ -593,7 +594,7 @@ function PadMove( float Delta, out vector World )
 	if ( PadWait > 0 )
 		return;
 	if ( PadGoal == None )
-		PadGoal = Game.NearestPad(Location, Location.Z - CollisionHeight);
+		PadGoal = Game.NearestPad(Location, Location.Z - CollisionHeight, LastPad);
 	if ( PadGoal == None )
 		return;
 	ToPad = (PadGoal.Location - Location) * vect(1,1,0);

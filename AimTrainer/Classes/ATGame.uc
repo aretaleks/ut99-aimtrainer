@@ -105,7 +105,7 @@ var Sound StreakSounds[4];
 var bool  bRangeMap;     // on DM-AimRange: downrange is +X (yaw 0) wherever the trainee stands
 var Kicker Pads[16];      // Airborne: the kicker pads of its hall
 var int    NumPads;
-var Kicker LedgePad, LiftPad;  // Airborne: the pad on the ledge (the field's centre), the one up to it
+var Kicker BoostPad;      // Airborne: the pad in the middle of the field (its centre), straight up
 var int    PlacedRange;   // Airborne: the range whose firing spot the trainee was put at
 var float  DeckEndX;      // High Ground: where the trainee's firing deck ends (no targets before it)
 var() config float MaxKickSpeed;  // Airborne: fastest sideways speed of a pad's arc (uu/s)
@@ -511,7 +511,7 @@ function bool InCourse( vector V )
 
 // Players start at the firing line of the chosen course's hall. Airborne has
 // one firing spot per range, at the middle of the range band from the pad
-// field's centre (the pad on the ledge).
+// field's centre (the boost pad).
 function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, optional string incomingName )
 {
 	local PlayerStart P, Pick;
@@ -520,8 +520,8 @@ function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, opt
 
 	if ( bRangeMap )
 	{
-		if ( ActiveCourse() == 2 && LedgePad != None )
-			WantX = LedgePad.Location.X - 0.5 * (RangeMin[Range] + RangeMax[Range]);
+		if ( ActiveCourse() == 2 && BoostPad != None )
+			WantX = BoostPad.Location.X - 0.5 * (RangeMin[Range] + RangeMax[Range]);
 		foreach AllActors(class'PlayerStart', P)
 			if ( InCourse(P.Location) && (WantX == 0 || Abs(P.Location.X - WantX) < 150) && Rand(++N) == 0 )
 				Pick = P;
@@ -559,15 +559,15 @@ function KeepInCourse()
 }
 
 // What the courses need from the map: where High Ground's firing deck ends,
-// and Airborne's pads (placed by the map, their arcs set here): the one on the
-// ledge, the lift pad in front of it, the cross pads.
+// and Airborne's pads (placed by the map, their arcs set here): the boost pad
+// in the middle of the field, the cross pads around it.
 function ScanCourses()
 {
 	local Kicker K;
 	local PlayerStart P;
 	local int i;
-	local float X;
-	local vector V, HitLoc, HitNorm;
+	local float X, D, BestD;
+	local vector V, HitLoc, HitNorm, Mid;
 
 	NumPads = 0;
 	if ( !bRangeMap )
@@ -590,22 +590,32 @@ function ScanCourses()
 		if ( CourseOfY(K.Location.Y) == 2 && NumPads < ArrayCount(Pads) )
 		{
 			Pads[NumPads++] = K;
-			if ( LedgePad == None || K.Location.Z > LedgePad.Location.Z )
-				LedgePad = K;
+			Mid += K.Location;
 		}
+	if ( NumPads == 0 )
+		return;
+	// the boost pad: the one in the middle
+	Mid /= NumPads;
+	BestD = 1000000;
 	for ( i = 0; i < NumPads; i++ )
-		if ( Pads[i] != LedgePad && Abs(Pads[i].Location.Y - LedgePad.Location.Y) < 200 )
-			LiftPad = Pads[i];
+	{
+		D = VSize((Pads[i].Location - Mid) * vect(1,1,0));
+		if ( D < BestD )
+		{
+			BestD = D;
+			BoostPad = Pads[i];
+		}
+	}
 }
 
 function bool IsCrossPad( Kicker K )
 {
-	return K != None && K != LedgePad && K != LiftPad;
+	return K != None && K != BoostPad;
 }
 
-// Airborne: the nearest pad it can get to from where it stands (on the
-// ledge, the ledge's pad; on the floor, the floor's pads).
-function Kicker NearestPad( vector V, float FeetZ )
+// Airborne: the nearest pad it can get to from where it stands (one on its
+// own floor), other than Skip (the one that just kicked it).
+function Kicker NearestPad( vector V, float FeetZ, optional Kicker Skip )
 {
 	local int i;
 	local float D, BestD;
@@ -614,7 +624,7 @@ function Kicker NearestPad( vector V, float FeetZ )
 	BestD = 1000000;
 	for ( i = 0; i < NumPads; i++ )
 	{
-		if ( Abs(Pads[i].Location.Z - 40 - FeetZ) > 48 )
+		if ( Abs(Pads[i].Location.Z - 40 - FeetZ) > 48 || Pads[i] == Skip )
 			continue;
 		D = VSize((Pads[i].Location - V) * vect(1,1,0));
 		if ( D < BestD )
@@ -639,7 +649,7 @@ function Kicker OtherSidePad( Kicker K, bool bSameRow, bool bSameSide )
 	{
 		if ( !IsCrossPad(Pads[i]) || Pads[i] == K )
 			continue;
-		if ( ((Pads[i].Location.Y - LedgePad.Location.Y) * (K.Location.Y - LedgePad.Location.Y) > 0) != bSameSide )
+		if ( ((Pads[i].Location.Y - BoostPad.Location.Y) * (K.Location.Y - BoostPad.Location.Y) > 0) != bSameSide )
 			continue;
 		D = Abs(Pads[i].Location.X - K.Location.X);
 		if ( !bSameRow )
@@ -655,11 +665,11 @@ function Kicker OtherSidePad( Kicker K, bool bSameRow, bool bSameSide )
 
 // Airborne: a new arc for K, set just before a target steps on it, so no two
 // flights are the same. By pad type:
-//  - the ledge pad throws it down to the floor beside a cross pad;
-//  - the lift pad throws it up onto the ledge;
+//  - the boost pad throws it nearly straight up, high and slow, to land a
+//    little way off in any direction;
 //  - a cross pad throws it across the field (straight or diagonally, landing
-//    between half way and just short of the other side), on a high lob to the
-//    other pad on its side, or up onto the ledge.
+//    between half way and just short of the other side), or on a high lob to
+//    the other pad on its side.
 // Low and fast or high and slow, no faster than MaxKickSpeed sideways (a long,
 // flat arc gets higher instead). Solved for the zone's gravity; the pads kill
 // the old velocity (bKillVelocity), so the arc is exact.
@@ -669,35 +679,23 @@ function AimKick( Kicker K )
 	local vector From, To;
 	local float Apex, Top, Vz, T, G, H, R;
 	local string Kind;
+	local rotator Dir;
 
-	if ( K == None || LedgePad == None || LiftPad == None )
+	if ( K == None || BoostPad == None )
 		return;
 	From = K.Location;
 	R = FRand();
-	if ( K == LedgePad )
+	if ( K == BoostPad )
 	{
-		Kind = "down";
-		P = Pads[Rand(NumPads)];
-		if ( !IsCrossPad(P) )
-			P = OtherSidePad(LiftPad, FRand() < 0.5, false);
-		if ( P == None )
-			return;
-		To = P.Location + Normal((LedgePad.Location.Y - P.Location.Y) * vect(0,1,0)) * (150 + FRand() * 300);
-		To.X += (FRand() - 0.5) * 400;
-		Apex = 48 + FRand() * 300;
+		Kind = "boost";
+		Dir.Yaw = Rand(65536);
+		To = From + vector(Dir) * (120 + FRand() * 230);
+		Apex = 600 + FRand() * 300;
 	}
-	else if ( K == LiftPad || R > 0.8 )
-	{
-		Kind = "ledge";
-		To = LedgePad.Location;
-		To.Y += (110 + FRand() * 40) * (2 * int(FRand() < 0.5) - 1);
-		To.X += (FRand() - 0.5) * 140;
-		Apex = 180 + FRand() * 270;
-	}
-	else if ( R < 0.6 )
+	else if ( R < 0.75 )
 	{
 		Kind = "across";
-		P = OtherSidePad(K, R < 0.4, false);
+		P = OtherSidePad(K, R < 0.45, false);
 		if ( P == None )
 			return;
 		To = From + (P.Location - From) * (0.5 + FRand() * 0.4);
@@ -710,14 +708,10 @@ function AimKick( Kicker K )
 		P = OtherSidePad(K, false, true);
 		if ( P == None )
 			return;
-		To = P.Location + Normal((LedgePad.Location.Y - P.Location.Y) * vect(0,1,0)) * (100 + FRand() * 250);
+		To = P.Location + Normal((BoostPad.Location.Y - P.Location.Y) * vect(0,1,0)) * (100 + FRand() * 250);
 		Apex = 450 + FRand() * 350;
 	}
-	// lands on the ledge, or on the floor (the height of a floor pad)
-	if ( Kind == "ledge" )
-		To.Z = LedgePad.Location.Z;
-	else
-		To.Z = LiftPad.Location.Z;
+	To.Z = From.Z;   // all pads are on the floor
 	G = Abs(K.Region.Zone.ZoneGravity.Z);
 	if ( G < 100 )
 		G = 950;
@@ -757,18 +751,16 @@ function bool FindCourseSpot( out vector Spot, vector Eye, vector Origin, int Ax
 	{
 		if ( ActiveCourse() == 2 )
 		{
-			if ( NumPads == 0 || LedgePad == None )
+			if ( NumPads == 0 || BoostPad == None )
 				return false;
 			K = Pads[Rand(NumPads)];
-			if ( K == LedgePad )
-				continue;
-			if ( K == LiftPad )
-				// beside it, a little in front
+			if ( K == BoostPad )
+				// beside it
 				Cand = K.Location + (2 * int(FRand() < 0.5) - 1) * (150 + FRand() * 200) * vect(0,1,0)
-					- (50 + FRand() * 100) * vect(1,0,0);
+					+ (FRand() - 0.5) * 200 * vect(1,0,0);
 			else
 				// beside it, towards the middle of the field
-				Cand = K.Location + Normal((LedgePad.Location.Y - K.Location.Y) * vect(0,1,0)) * (120 + FRand() * 250)
+				Cand = K.Location + Normal((BoostPad.Location.Y - K.Location.Y) * vect(0,1,0)) * (120 + FRand() * 250)
 					+ (FRand() - 0.5) * 300 * vect(1,0,0);
 		}
 		else
@@ -794,8 +786,6 @@ function bool FindCourseSpot( out vector Spot, vector Eye, vector Origin, int Ax
 			if ( Dir < 4 )
 				continue;
 		}
-		else if ( HitLoc.Z > LedgePad.Location.Z - 80 )
-			continue;   // on the floor, not on the ledge
 		Spot = HitLoc + vect(0,0,40);
 		if ( !InCourse(Spot) || !FastTrace(Spot + vect(0,0,30), Eye) || TooCloseToTargets(Spot) )
 			continue;

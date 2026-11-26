@@ -135,15 +135,15 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
     (`SafeLaunch`). A target in the pit is replaced;
   - Airborne: one pad field for all ranges; the range picks the firing spot
     (the player start 550 / 1150 / 2200 in front of the field's centre, the
-    ledge pad; `FindPlayerStart`, moved again when the range changes). The
-    map's `Kicker`s in that hall are the pads: the highest is the ledge pad,
-    the floor pad in line with it the lift pad, the rest cross pads. After a
+    boost pad; `FindPlayerStart`, moved again when the range changes). The
+    map's `Kicker`s in that hall are the pads: the one in the middle is the
+    boost pad, the rest cross pads. After a
     short time on the ground a target dodges to the nearest pad on its own
-    floor, dodge after dodge (0.35 s lock after each landing plus
+    floor (not the one that kicked it last), dodge after dodge (0.35 s lock after each landing plus
     0.03-0.18 s), facing the pad; just before, `ATGame.AimKick` sets that
-    pad's `KickVelocity` by pad type: the ledge pad down to the floor, the
-    lift pad onto the ledge, a cross pad across (straight or diagonal), on a
-    high lob, or onto the ledge. Random apex, at most `MaxKickSpeed`
+    pad's `KickVelocity` by pad type: the boost pad nearly straight up (apex
+    600-900, landing 120-350 away), a cross pad across (straight or
+    diagonal) or on a high lob. Random apex, at most `MaxKickSpeed`
     (1400 uu/s) sideways. In the air from a pad it presses no keys and faces
     the trainee again. Only then can it be hit (`Hittable`): shots go through
     a target on the floor, so they count as misses. The band and sector rules

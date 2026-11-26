@@ -14,8 +14,7 @@ its firing line at x = FIRE_X and runs downrange along +x:
     joined by ramps, laid out in the Close / Mid / Far distance bands; the
     firing deck is raised (DECK_Z), so there are targets below and above;
   - Airborne (y around -HALL_DY): one field of kicker pads of every type (cross
-    pads on both sides, a lift pad up onto a ledge, a pad on the ledge) for all
-    distances: the Range setting picks one of three firing spots, 550 / 1150 /
+    pads on both sides, a boost pad in the middle) for all distances: the Range setting picks one of three firing spots, 550 / 1150 /
     2200 from the field's centre (the game sets each kick's arc).
 ATGame tells the halls apart by y (ATGame.CourseOfY).
 """
@@ -84,12 +83,11 @@ PLATFORM_BANDS = [
 # middle of each range band). (x, y) relative to the field's centre.
 FIELD_X = -1600
 AIR_SPOTS = [550, 1150, 2200]
-LEDGE = (-192, 192, -224, 224, 224)   # x0, x1, y0, y1, top: a raised block in the middle
-# pad types by light colour: cross pads orange, the lift pad blue, the ledge pad green
+# pad types by light colour: cross pads orange, the boost pad (nearly straight
+# up, high and slow) blue in the middle
 CROSS_PADS = [(-220, -600), (-220, 600), (260, -600), (260, 600)]
-LIFT_PAD = (-330, 0)
-LEDGE_PAD = (0, 0)
-HUE_CROSS, HUE_LIFT, HUE_LEDGE = 30, 160, 85
+BOOST_PAD = (0, 0)
+HUE_CROSS, HUE_BOOST = 30, 160
 
 
 def hall(cy, floor_z=0):
@@ -143,23 +141,17 @@ def high_ground(cy):
 
 
 def airborne(cy):
-    x0, x1, y0, y1, top = LEDGE
-    print(S.add_box([FIELD_X + x0, cy + y0, 0], [FIELD_X + x1, cy + y1, top], csg="add",
-                    floor_texture=FLOOR, wall_texture=TRIM))
     # default arcs only: the game sets a new one for every kick
     for x, y in CROSS_PADS:
         print(S.add_kicker(FIELD_X + x, cy + y, 0, [FIELD_X + x, cy - y, 0], apex=192, pad="inset",
                            light=True, light_hue=HUE_CROSS))
-    x, y = LIFT_PAD
-    print(S.add_kicker(FIELD_X + x, cy + y, 0, [FIELD_X, cy + 120, top], apex=160, pad="inset",
-                       light=True, light_hue=HUE_LIFT))
-    x, y = LEDGE_PAD
-    print(S.add_kicker(FIELD_X + x, cy + y, top, [FIELD_X, cy + 600, 0], apex=128, pad="inset",
-                       light=True, light_hue=HUE_LEDGE))
+    x, y = BOOST_PAD
+    print(S.add_kicker(FIELD_X + x, cy + y, 0, [FIELD_X + x, cy + y + 200, 0], apex=700, pad="inset",
+                       light=True, light_hue=HUE_BOOST))
     # the firing spots: a line in front of each, three starts behind it
     for d in AIR_SPOTS:
         fx = FIELD_X - d
-        fire_line(cy, 0, fx + 128)   # in view, and clear of the lift pad at Close
+        fire_line(cy, 0, fx + 128)   # in view
         for y in (0, -128, 128):
             print(S.add_player_start(fx, cy + y, 0, yaw=0))
 
