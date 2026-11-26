@@ -40,6 +40,13 @@ function Tick( float Delta )
 	}
 	if ( R.MenuBar.bWindowVisible )
 		R.MenuBar.HideWindow();
+	// UT pulls its Game menu down the first time the menu bar is drawn, which
+	// can happen for a frame before this hides the bar; that menu is a window
+	// of its own, so hiding the bar leaves it open. Close it, and don't let
+	// UT open it later.
+	R.MenuBar.bShowMenu = false;
+	if ( R.MenuBar.Selected != None )
+		R.MenuBar.CloseUp();
 	if ( !TrainerWindowShown() )
 		ATGame(L.Game).CreateMenuWindow(Root);
 }

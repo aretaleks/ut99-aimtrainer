@@ -529,8 +529,12 @@ function LogMenuState( WindowConsole C )
 	if ( UMenuRootWindow(C.Root) != None )
 		S = S @ "utbar=" $ UMenuRootWindow(C.Root).MenuBar.bWindowVisible;
 	for ( W = C.Root.FirstChildWindow; W != None; W = W.NextSiblingWindow )
+	{
 		if ( ATMenuWindow(W) != None )
 			S = S @ "trainerwindow=" $ W.bWindowVisible;
+		if ( UWindowPulldownMenu(W) != None && W.bWindowVisible )
+			S = S @ "utpulldown=" $ W.Class.Name;
+	}
 	Log("ATTEST" @ S, 'ATTest');
 }
 
