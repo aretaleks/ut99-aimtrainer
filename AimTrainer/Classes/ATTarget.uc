@@ -857,11 +857,15 @@ function Launch( vector World )
 	Dir = Normal(World * vect(1,1,0));
 	if ( bLaunchDodge )
 	{
+		// UT's dodge names are swapped: the right strafe key makes the engine's
+		// DODGE_Left, which moves along +Y (right) and plays 'DodgeL' (and
+		// TournamentPlayer.PlayInAir also shows 'DodgeL' when moving right). So a
+		// dodge to the right plays 'DodgeL', as players look in a real match.
 		S = Dir dot Y;
 		if ( S > 0.7 )
-			TweenAnim('DodgeR', 0.1);
-		else if ( S < -0.7 )
 			TweenAnim('DodgeL', 0.1);
+		else if ( S < -0.7 )
+			TweenAnim('DodgeR', 0.1);
 		else if ( (Dir dot X) < 0 )
 			TweenAnim('DodgeB', 0.1);
 		else
