@@ -1,4 +1,4 @@
-// AimTrainer.exe - installs and starts the Aim Trainer for Unreal Tournament (469f).
+// AimTrainer.exe - installs and starts the Aim Trainer for Unreal Tournament (OldUnreal 469 patches).
 //
 // The Aim Trainer's four files are inside this exe. Running it:
 //   1. finds the UT folder (next to the exe, the folder used last time, the
@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 
 [assembly: AssemblyTitle("Aim Trainer for Unreal Tournament")]
-[assembly: AssemblyDescription("Installs and starts the Aim Trainer for UT99 469f")]
+[assembly: AssemblyDescription("Installs and starts the Aim Trainer for UT99 (OldUnreal 469)")]
 [assembly: AssemblyProduct("Aim Trainer")]
 [assembly: AssemblyVersion("1.2.0.0")]
 [assembly: AssemblyFileVersion("1.2.0.0")]
@@ -268,8 +268,9 @@ static class Program
 
     // ---------------------------------------------------------------- version
 
-    // The game writes its version to its log ("Init: Revision: f"). The trainer is
-    // built for 469f; older patches may not load it.
+    // The game writes its version to its log ("Init: Version: 469"). The trainer
+    // is built and tested on 469f, and players report 469b works too; only a
+    // game older than 469 (436, 451) gets a warning, since it is untested there.
     static bool CheckVersion(string ut)
     {
         string sys = Path.Combine(ut, "System");
@@ -299,13 +300,14 @@ static class Program
         catch { }
         if (version == null)
             return true;
-        bool ok = version == "469" && revision != null && string.CompareOrdinal(revision, "f") >= 0;
+        bool ok = string.CompareOrdinal(version, "469") >= 0;
         if (ok || Quiet)
             return true;
         string found = version + (revision ?? "");
         return MessageBox.Show(
-            "The Aim Trainer is made for Unreal Tournament 469f, and your game says it is " + found + ".\n" +
-            "It may not load. Get the latest patch from oldunreal.com.\n\nInstall anyway?",
+            "The Aim Trainer is tested on Unreal Tournament 469f (players report 469b works too).\n" +
+            "Your game says it is " + found + ", which is older and untested: it may not load.\n" +
+            "OldUnreal's 469 patches are at oldunreal.com.\n\nInstall anyway?",
             Title, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes;
     }
 

@@ -25,7 +25,7 @@ FILES = [
     (os.path.join(ROOT, "Maps", "DM-AimRange.unr"), "DM-AimRange.unr"),
 ]
 
-README = """AIM TRAINER for Unreal Tournament (UT99, patch 469f)
+README = """AIM TRAINER for Unreal Tournament (UT99, OldUnreal 469 patches)
 =====================================================
 
 Targets are player models that move like real players: their movement is
@@ -49,7 +49,9 @@ INSTALL AND PLAY
      Maps\\DM-AimRange.unr
 3. Next time, AimTrainer.exe again (it updates the files if the exe is newer).
 
-You need Unreal Tournament with the OldUnreal 469f patch (oldunreal.com).
+Made and tested on Unreal Tournament with the OldUnreal 469f patch
+(oldunreal.com); players report 469b works too. Older versions (436,
+451) are untested.
 
 Windows may warn that the exe is from an unknown publisher (it isn't signed):
 choose "More info" > "Run anyway". Or put the four files in place yourself:

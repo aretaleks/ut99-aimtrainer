@@ -1,4 +1,4 @@
-# Aim Trainer for Unreal Tournament (UT99, 469f)
+# Aim Trainer for Unreal Tournament (UT99, OldUnreal 469)
 
 An aim trainer for UT99 whose targets move like real players. Their movement is
 replayed from about 3 hours of recorded movement of real players in iCTF matches:
@@ -24,7 +24,9 @@ across the field; only targets in the air can be hit).
    - `Maps\DM-AimRange.unr`
 3. Next time, run AimTrainer.exe again (a newer version updates the files).
 
-You need UT99 with the [OldUnreal](https://www.oldunreal.com) **469f** patch.
+It's made and tested on UT99 with the [OldUnreal](https://www.oldunreal.com) **469f** patch.
+Players report that **469b** works too, so any 469 patch should do; older
+versions (436, 451) are untested.
 
 Windows may warn that the exe is from an unknown publisher (it isn't signed):
 choose "More info" > "Run anyway". You can also start the trainer from the game:
