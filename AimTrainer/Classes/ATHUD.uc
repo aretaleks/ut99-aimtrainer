@@ -95,6 +95,8 @@ function DrawIdle( canvas C, ATGame G )
 	C.Font = MyFonts.GetSmallFont(C.ClipX);
 	SetColor(C, 255, 255, 255);
 	Y += Centered(C, G.SettingsLine(), Y + 4) + 4;
+	if ( G.ActiveCourse() == 2 )
+		Y += Centered(C, "Airborne: only targets flying from a pad can be hit", Y + 2) + 2;
 	if ( int(Level.TimeSeconds * 2) % 2 == 0 )
 		SetColor(C, 0, 255, 0);
 	else

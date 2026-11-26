@@ -124,20 +124,30 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
     them apart. The trainee starts at, and is kept in, the chosen hall's
     firing line (`FindPlayerStart`, `KeepInCourse`; also after falling into
     High Ground's pit);
+  - courses never fall back to the generic spawn search (its last resort,
+    a navigation point, is a player start on the trainee's deck); a failed
+    search is tried again next tick;
   - High Ground: spawn spots are found by tracing down onto flat platform
-    tops in the range band, away from edges. Targets check the floor a step
+    tops in the range band, away from edges and never on the firing deck
+    (its end is measured from the map at start, `ScanCourses`). Targets check the floor a step
     ahead of their keys and of their slide (`AvoidLedges`) and turn back at an
     edge; a dodge or jump that would land in the pit isn't taken
     (`SafeLaunch`). A target in the pit is replaced;
-  - Airborne: the map's `Kicker`s in that hall are the pads. A pad belongs to
-    a range by its distance downrange (along the firing direction). After a
-    short time on the ground a target dodges to the nearest pad in the band,
-    dodge after dodge (0.35 s lock after each landing plus 0.03-0.18 s),
-    facing the pad; just before, `ATGame.AimKick` sets that pad's
-    `KickVelocity` for a landing between half way and just short of a random
-    pad across the hall in the band, with a random apex and at most
-    `MaxKickSpeed` (1400 uu/s) sideways. In the air from a pad it presses no
-    keys and faces the trainee again.
+  - Airborne: one pad field for all ranges; the range picks the firing spot
+    (the player start 550 / 1150 / 2200 in front of the field's centre, the
+    ledge pad; `FindPlayerStart`, moved again when the range changes). The
+    map's `Kicker`s in that hall are the pads: the highest is the ledge pad,
+    the floor pad in line with it the lift pad, the rest cross pads. After a
+    short time on the ground a target dodges to the nearest pad on its own
+    floor, dodge after dodge (0.35 s lock after each landing plus
+    0.03-0.18 s), facing the pad; just before, `ATGame.AimKick` sets that
+    pad's `KickVelocity` by pad type: the ledge pad down to the floor, the
+    lift pad onto the ledge, a cross pad across (straight or diagonal), on a
+    high lob, or onto the ledge. Random apex, at most `MaxKickSpeed`
+    (1400 uu/s) sideways. In the air from a pad it presses no keys and faces
+    the trainee again. Only then can it be hit (`Hittable`): shots go through
+    a target on the floor, so they count as misses. The band and sector rules
+    are off in Airborne (the field is the area).
 - Hitbox: IG+'s crouch rule in `AdjustHitLocation` (called by
   `Pawn.TraceShot`) and IG+'s Sniper headshot line in `HeadshotZ`.
 - Animations follow `TournamentPlayer.PlayRunning`, but the body turns to the

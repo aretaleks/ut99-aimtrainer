@@ -138,9 +138,13 @@ in a way no human does, it's wrong.
 **Courses** (DM-AimRange's three halls)
 - Flat Range, High Ground (platforms over a pit, the firing deck raised so
   targets are below and above), Airborne (kicker pads).
-- Close/Mid/Far mean the same distance in every course: platforms and pads are
-  laid out per band.
-- High Ground targets never walk, dodge or jump off a platform edge.
+- Close/Mid/Far mean the same distance in every course. High Ground has
+  platforms per band. Airborne has one pad field with every pad type for all
+  ranges; the range moves the trainee's firing spot, never which pads are used.
+- High Ground targets never walk, dodge or jump off a platform edge, and never
+  spawn on the trainee's deck.
+- Airborne: only targets flying from a pad can be hit (shots go through
+  grounded ones and count as misses).
 - Players dodge to a pad, they don't walk: dodge after dodge with UT's
   0.35 s lock plus a human delay.
 - Every kick has a new arc (low and fast or high and slow, straight or

@@ -251,9 +251,15 @@ function Tick( float Delta )
 	else
 		World = WantF * F + WantR * R;
 
-	// keep within the range band of the trainee
+	// keep within the range band of the trainee (Airborne: the pad field is the
+	// area, the range is where the trainee stands)
 	MinKeep = Game.RangeMin[Game.Range] * 0.6;
 	MaxKeep = Game.RangeMax[Game.Range] * 1.25;
+	if ( Game.ActiveCourse() == 2 )
+	{
+		MinKeep = 0;
+		MaxKeep = 1000000;
+	}
 	if ( (Dist < MinKeep && (World dot F) > 0) || (Dist > MaxKeep && (World dot F) < 0) )
 	{
 		World -= 2 * (World dot F) * F;
@@ -277,7 +283,7 @@ function Tick( float Delta )
 		Anchor = Location;
 	// Fixed position (or anywhere on DM-AimRange): stay downrange, within +-45
 	// degrees of the firing direction.
-	if ( Game.DownrangeAxis(AxisOrigin, AxisYaw) )
+	if ( Game.ActiveCourse() != 2 && Game.DownrangeAxis(AxisOrigin, AxisYaw) )
 	{
 		Axis = vector(rot(0,1,0) * AxisYaw);
 		Side = Axis cross vect(0,0,1);
@@ -370,7 +376,7 @@ function Tick( float Delta )
 
 	if ( Game.ActiveCourse() == 2 )
 		PadMove(Delta, World);
-	if ( Game.ActiveCourse() == 1 && Physics == PHYS_Walking )
+	if ( OnHighFloor() && Physics == PHYS_Walking )
 		AvoidLedges(World);
 
 	Speed = VSize(World);
@@ -424,7 +430,7 @@ function Tick( float Delta )
 				LaunchZ = PendingDodgeZ;
 			}
 		}
-		if ( bWantLaunch && Game.ActiveCourse() == 1 && !SafeLaunch(World) )
+		if ( bWantLaunch && OnHighFloor() && !SafeLaunch(World) )
 		{
 			// it would land in the pit: a player wouldn't take that dodge or jump
 			bWantLaunch = false;
@@ -464,6 +470,20 @@ function Tick( float Delta )
 // ============================================================================
 // Courses
 // ============================================================================
+
+// Standing where a fall is possible: on High Ground's platforms, or on
+// Airborne's ledge.
+function bool OnHighFloor()
+{
+	return Game.ActiveCourse() == 1 || (Game.ActiveCourse() == 2 && Location.Z - CollisionHeight > 100);
+}
+
+// Airborne: only a target flying from a pad can be hit; on the floor (or in a
+// dodge) shots go through it, so they count as misses.
+function bool Hittable()
+{
+	return Game == None || Game.ActiveCourse() != 2 || bKicked;
+}
 
 // Is there floor a step ahead in direction Dir (no drop deeper than a step or
 // a ramp)?
@@ -559,7 +579,7 @@ function PadMove( float Delta, out vector World )
 	if ( Physics == PHYS_Falling )
 	{
 		// just kicked: the pad has thrown it up
-		if ( PadGoal != None && Velocity.Z > 300 && VSize((PadGoal.Location - Location) * vect(1,1,0)) < 150 )
+		if ( PadGoal != None && Velocity.Z > 250 && VSize((PadGoal.Location - Location) * vect(1,1,0)) < 150 )
 		{
 			bKicked = true;
 			PadGoal = None;
@@ -573,7 +593,7 @@ function PadMove( float Delta, out vector World )
 	if ( PadWait > 0 )
 		return;
 	if ( PadGoal == None )
-		PadGoal = Game.NearestPad(Location);
+		PadGoal = Game.NearestPad(Location, Location.Z - CollisionHeight);
 	if ( PadGoal == None )
 		return;
 	ToPad = (PadGoal.Location - Location) * vect(1,1,0);
@@ -1280,6 +1300,8 @@ function bool AdjustHitLocation( out vector HitLocation, vector TraceDir )
 	local float AdjZ, MaxZ;
 	local vector Delta;
 
+	if ( !Hittable() )
+		return false;
 	MaxZ = Location.Z + (1.0 - 0.7 * DuckFraction) * CollisionHeight;
 	if ( Game != None && Game.bTestMode && DuckFraction > 0 )
 		Log("ATTEST hitbox duck=" $ DuckFraction @ "hitz=" $ (HitLocation.Z - Location.Z) @ "maxz=" $ (MaxZ - Location.Z) @ "over=" $ (HitLocation.Z > MaxZ), 'ATTest');
@@ -1309,7 +1331,7 @@ function TakeDamage( int Dmg, Pawn InstigatedBy, vector HitLocation, vector Mome
 	local bool bHead, bKilled;
 	local vector BloodOffset;
 
-	if ( bDead || bHidden || Game == None )
+	if ( bDead || bHidden || Game == None || !Hittable() )
 		return;
 
 	// Sniper Rifle: IG+'s headshot line (higher than stock UT's 0.62, and lower

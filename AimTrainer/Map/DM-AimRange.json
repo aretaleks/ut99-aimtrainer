@@ -9,7 +9,7 @@
   "portal_bias": 70
  },
  "gametype": "dm",
- "next_id": 170,
+ "next_id": 155,
  "elements": [
   {
    "id": 1,
@@ -1030,12 +1030,12 @@
     "shape": "box",
     "csg": "add",
     "location": [
-     -4224.0,
+     -4304.0,
      5120.0,
      -16.0
     ],
     "size": [
-     768,
+     608,
      4096,
      480
     ],
@@ -1652,7 +1652,7 @@
     "shape": "box",
     "csg": "semisolid",
     "location": [
-     -3824.0,
+     -4048.0,
      5120.0,
      232.0
     ],
@@ -2281,760 +2281,42 @@
   },
   {
    "id": 105,
-   "kind": "kicker",
+   "kind": "brush",
    "params": {
+    "shape": "box",
+    "csg": "add",
     "location": [
-     -3676,
-     -5420,
-     40
+     -1600.0,
+     -5120.0,
+     112.0
     ],
-    "target": [
-     -3676,
-     -5120,
-     0
+    "size": [
+     384,
+     448,
+     224
     ],
-    "velocity": [
-     0.0,
-     235.93,
-     603.99
-    ],
-    "apex": 192
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
    }
   },
   {
    "id": 106,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "subtract",
-    "location": [
-     -3680,
-     -5424,
-     0.0
-    ],
-    "radius": 90.50966799187808,
-    "height": 32,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "bottom": "Mine.Base.MCMETL",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {},
-    "group": "KickerPads",
-    "face_fit": {}
-   }
-  },
-  {
-   "id": 107,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "add",
-    "location": [
-     -3680,
-     -5424,
-     -9.0
-    ],
-    "radius": 73.53910524340094,
-    "height": 14,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "top": "Atropos.Lights.sqAb",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {
-     "top": 4194304
-    },
-    "group": "KickerPads",
-    "face_fit": {
-     "top": [
-      104,
-      128,
-      128
-     ]
-    }
-   }
-  },
-  {
-   "id": 108,
-   "kind": "light",
-   "params": {
-    "location": [
-     -3680,
-     -5424,
-     56
-    ],
-    "brightness": 200,
-    "radius": 6,
-    "hue": 30,
-    "saturation": 160
-   }
-  },
-  {
-   "id": 109,
    "kind": "kicker",
    "params": {
     "location": [
-     -3676,
-     -4820,
+     -1820,
+     -5720,
      40
     ],
     "target": [
-     -3676,
-     -5120,
-     0
-    ],
-    "velocity": [
-     0.0,
-     -235.93,
-     603.99
-    ],
-    "apex": 192
-   }
-  },
-  {
-   "id": 110,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "subtract",
-    "location": [
-     -3680,
-     -4816,
-     0.0
-    ],
-    "radius": 90.50966799187808,
-    "height": 32,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "bottom": "Mine.Base.MCMETL",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {},
-    "group": "KickerPads",
-    "face_fit": {}
-   }
-  },
-  {
-   "id": 111,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "add",
-    "location": [
-     -3680,
-     -4816,
-     -9.0
-    ],
-    "radius": 73.53910524340094,
-    "height": 14,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "top": "Atropos.Lights.sqAb",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {
-     "top": 4194304
-    },
-    "group": "KickerPads",
-    "face_fit": {
-     "top": [
-      104,
-      128,
-      128
-     ]
-    }
-   }
-  },
-  {
-   "id": 112,
-   "kind": "light",
-   "params": {
-    "location": [
-     -3680,
-     -4816,
-     56
-    ],
-    "brightness": 200,
-    "radius": 6,
-    "hue": 30,
-    "saturation": 160
-   }
-  },
-  {
-   "id": 113,
-   "kind": "kicker",
-   "params": {
-    "location": [
-     -3476,
-     -5500,
-     40
-    ],
-    "target": [
-     -3476,
-     -5120,
-     0
-    ],
-    "velocity": [
-     0.0,
-     298.85,
-     603.99
-    ],
-    "apex": 192
-   }
-  },
-  {
-   "id": 114,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "subtract",
-    "location": [
-     -3472,
-     -5504,
-     0.0
-    ],
-    "radius": 90.50966799187808,
-    "height": 32,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "bottom": "Mine.Base.MCMETL",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {},
-    "group": "KickerPads",
-    "face_fit": {}
-   }
-  },
-  {
-   "id": 115,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "add",
-    "location": [
-     -3472,
-     -5504,
-     -9.0
-    ],
-    "radius": 73.53910524340094,
-    "height": 14,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "top": "Atropos.Lights.sqAb",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {
-     "top": 4194304
-    },
-    "group": "KickerPads",
-    "face_fit": {
-     "top": [
-      104,
-      128,
-      128
-     ]
-    }
-   }
-  },
-  {
-   "id": 116,
-   "kind": "light",
-   "params": {
-    "location": [
-     -3472,
-     -5504,
-     56
-    ],
-    "brightness": 200,
-    "radius": 6,
-    "hue": 30,
-    "saturation": 160
-   }
-  },
-  {
-   "id": 117,
-   "kind": "kicker",
-   "params": {
-    "location": [
-     -3476,
-     -4740,
-     40
-    ],
-    "target": [
-     -3476,
-     -5120,
-     0
-    ],
-    "velocity": [
-     0.0,
-     -298.85,
-     603.99
-    ],
-    "apex": 192
-   }
-  },
-  {
-   "id": 118,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "subtract",
-    "location": [
-     -3472,
-     -4736,
-     0.0
-    ],
-    "radius": 90.50966799187808,
-    "height": 32,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "bottom": "Mine.Base.MCMETL",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {},
-    "group": "KickerPads",
-    "face_fit": {}
-   }
-  },
-  {
-   "id": 119,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "add",
-    "location": [
-     -3472,
-     -4736,
-     -9.0
-    ],
-    "radius": 73.53910524340094,
-    "height": 14,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "top": "Atropos.Lights.sqAb",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {
-     "top": 4194304
-    },
-    "group": "KickerPads",
-    "face_fit": {
-     "top": [
-      104,
-      128,
-      128
-     ]
-    }
-   }
-  },
-  {
-   "id": 120,
-   "kind": "light",
-   "params": {
-    "location": [
-     -3472,
-     -4736,
-     56
-    ],
-    "brightness": 200,
-    "radius": 6,
-    "hue": 30,
-    "saturation": 160
-   }
-  },
-  {
-   "id": 121,
-   "kind": "kicker",
-   "params": {
-    "location": [
-     -3196,
-     -5770,
-     40
-    ],
-    "target": [
-     -3196,
-     -5120,
-     0
-    ],
-    "velocity": [
-     0.0,
-     511.19,
-     603.99
-    ],
-    "apex": 192
-   }
-  },
-  {
-   "id": 122,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "subtract",
-    "location": [
-     -3200,
-     -5776,
-     0.0
-    ],
-    "radius": 90.50966799187808,
-    "height": 32,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "bottom": "Mine.Base.MCMETL",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {},
-    "group": "KickerPads",
-    "face_fit": {}
-   }
-  },
-  {
-   "id": 123,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "add",
-    "location": [
-     -3200,
-     -5776,
-     -9.0
-    ],
-    "radius": 73.53910524340094,
-    "height": 14,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "top": "Atropos.Lights.sqAb",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {
-     "top": 4194304
-    },
-    "group": "KickerPads",
-    "face_fit": {
-     "top": [
-      104,
-      128,
-      128
-     ]
-    }
-   }
-  },
-  {
-   "id": 124,
-   "kind": "light",
-   "params": {
-    "location": [
-     -3200,
-     -5776,
-     56
-    ],
-    "brightness": 200,
-    "radius": 6,
-    "hue": 30,
-    "saturation": 160
-   }
-  },
-  {
-   "id": 125,
-   "kind": "kicker",
-   "params": {
-    "location": [
-     -3196,
-     -4470,
-     40
-    ],
-    "target": [
-     -3196,
-     -5120,
-     0
-    ],
-    "velocity": [
-     0.0,
-     -511.19,
-     603.99
-    ],
-    "apex": 192
-   }
-  },
-  {
-   "id": 126,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "subtract",
-    "location": [
-     -3200,
-     -4464,
-     0.0
-    ],
-    "radius": 90.50966799187808,
-    "height": 32,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "bottom": "Mine.Base.MCMETL",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {},
-    "group": "KickerPads",
-    "face_fit": {}
-   }
-  },
-  {
-   "id": 127,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "add",
-    "location": [
-     -3200,
-     -4464,
-     -9.0
-    ],
-    "radius": 73.53910524340094,
-    "height": 14,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "top": "Atropos.Lights.sqAb",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {
-     "top": 4194304
-    },
-    "group": "KickerPads",
-    "face_fit": {
-     "top": [
-      104,
-      128,
-      128
-     ]
-    }
-   }
-  },
-  {
-   "id": 128,
-   "kind": "light",
-   "params": {
-    "location": [
-     -3200,
-     -4464,
-     56
-    ],
-    "brightness": 200,
-    "radius": 6,
-    "hue": 30,
-    "saturation": 160
-   }
-  },
-  {
-   "id": 129,
-   "kind": "kicker",
-   "params": {
-    "location": [
-     -2846,
-     -5820,
-     40
-    ],
-    "target": [
-     -2846,
-     -5120,
-     0
-    ],
-    "velocity": [
-     0.0,
-     550.51,
-     603.99
-    ],
-    "apex": 192
-   }
-  },
-  {
-   "id": 130,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "subtract",
-    "location": [
-     -2848,
-     -5824,
-     0.0
-    ],
-    "radius": 90.50966799187808,
-    "height": 32,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "bottom": "Mine.Base.MCMETL",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {},
-    "group": "KickerPads",
-    "face_fit": {}
-   }
-  },
-  {
-   "id": 131,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "add",
-    "location": [
-     -2848,
-     -5824,
-     -9.0
-    ],
-    "radius": 73.53910524340094,
-    "height": 14,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "top": "Atropos.Lights.sqAb",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {
-     "top": 4194304
-    },
-    "group": "KickerPads",
-    "face_fit": {
-     "top": [
-      104,
-      128,
-      128
-     ]
-    }
-   }
-  },
-  {
-   "id": 132,
-   "kind": "light",
-   "params": {
-    "location": [
-     -2848,
-     -5824,
-     56
-    ],
-    "brightness": 200,
-    "radius": 6,
-    "hue": 30,
-    "saturation": 160
-   }
-  },
-  {
-   "id": 133,
-   "kind": "kicker",
-   "params": {
-    "location": [
-     -2846,
-     -4420,
-     40
-    ],
-    "target": [
-     -2846,
-     -5120,
-     0
-    ],
-    "velocity": [
-     0.0,
-     -550.51,
-     603.99
-    ],
-    "apex": 192
-   }
-  },
-  {
-   "id": 134,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "subtract",
-    "location": [
-     -2848,
-     -4416,
-     0.0
-    ],
-    "radius": 90.50966799187808,
-    "height": 32,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "bottom": "Mine.Base.MCMETL",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {},
-    "group": "KickerPads",
-    "face_fit": {}
-   }
-  },
-  {
-   "id": 135,
-   "kind": "brush",
-   "params": {
-    "shape": "cylinder",
-    "csg": "add",
-    "location": [
-     -2848,
-     -4416,
-     -9.0
-    ],
-    "radius": 73.53910524340094,
-    "height": 14,
-    "sides": 4,
-    "texture": "Mine.Base.MCMETL",
-    "face_textures": {
-     "top": "Atropos.Lights.sqAb",
-     "sides": "Mine.Base.MCMETL"
-    },
-    "face_flags": {
-     "top": 4194304
-    },
-    "group": "KickerPads",
-    "face_fit": {
-     "top": [
-      104,
-      128,
-      128
-     ]
-    }
-   }
-  },
-  {
-   "id": 136,
-   "kind": "light",
-   "params": {
-    "location": [
-     -2848,
-     -4416,
-     56
-    ],
-    "brightness": 200,
-    "radius": 6,
-    "hue": 30,
-    "saturation": 160
-   }
-  },
-  {
-   "id": 137,
-   "kind": "kicker",
-   "params": {
-    "location": [
-     -2196,
-     -6320,
-     40
-    ],
-    "target": [
-     -2196,
-     -5120,
+     -1820,
+     -4520,
      0
     ],
     "velocity": [
@@ -3046,14 +2328,14 @@
    }
   },
   {
-   "id": 138,
+   "id": 107,
    "kind": "brush",
    "params": {
     "shape": "cylinder",
     "csg": "subtract",
     "location": [
-     -2192,
-     -6320,
+     -1824,
+     -5728,
      0.0
     ],
     "radius": 90.50966799187808,
@@ -3070,14 +2352,14 @@
    }
   },
   {
-   "id": 139,
+   "id": 108,
    "kind": "brush",
    "params": {
     "shape": "cylinder",
     "csg": "add",
     "location": [
-     -2192,
-     -6320,
+     -1824,
+     -5728,
      -9.0
     ],
     "radius": 73.53910524340094,
@@ -3102,12 +2384,12 @@
    }
   },
   {
-   "id": 140,
+   "id": 109,
    "kind": "light",
    "params": {
     "location": [
-     -2192,
-     -6320,
+     -1824,
+     -5728,
      56
     ],
     "brightness": 200,
@@ -3117,17 +2399,17 @@
    }
   },
   {
-   "id": 141,
+   "id": 110,
    "kind": "kicker",
    "params": {
     "location": [
-     -2196,
-     -3920,
+     -1820,
+     -4520,
      40
     ],
     "target": [
-     -2196,
-     -5120,
+     -1820,
+     -5720,
      0
     ],
     "velocity": [
@@ -3139,14 +2421,14 @@
    }
   },
   {
-   "id": 142,
+   "id": 111,
    "kind": "brush",
    "params": {
     "shape": "cylinder",
     "csg": "subtract",
     "location": [
-     -2192,
-     -3920,
+     -1824,
+     -4512,
      0.0
     ],
     "radius": 90.50966799187808,
@@ -3163,14 +2445,14 @@
    }
   },
   {
-   "id": 143,
+   "id": 112,
    "kind": "brush",
    "params": {
     "shape": "cylinder",
     "csg": "add",
     "location": [
-     -2192,
-     -3920,
+     -1824,
+     -4512,
      -9.0
     ],
     "radius": 73.53910524340094,
@@ -3195,12 +2477,12 @@
    }
   },
   {
-   "id": 144,
+   "id": 113,
    "kind": "light",
    "params": {
     "location": [
-     -2192,
-     -3920,
+     -1824,
+     -4512,
      56
     ],
     "brightness": 200,
@@ -3210,36 +2492,36 @@
    }
   },
   {
-   "id": 145,
+   "id": 114,
    "kind": "kicker",
    "params": {
     "location": [
-     -1696,
-     -6420,
+     -1340,
+     -5720,
      40
     ],
     "target": [
-     -1696,
-     -5120,
+     -1340,
+     -4520,
      0
     ],
     "velocity": [
      0.0,
-     1022.37,
+     943.73,
      603.99
     ],
     "apex": 192
    }
   },
   {
-   "id": 146,
+   "id": 115,
    "kind": "brush",
    "params": {
     "shape": "cylinder",
     "csg": "subtract",
     "location": [
-     -1696,
-     -6416,
+     -1344,
+     -5728,
      0.0
     ],
     "radius": 90.50966799187808,
@@ -3256,14 +2538,14 @@
    }
   },
   {
-   "id": 147,
+   "id": 116,
    "kind": "brush",
    "params": {
     "shape": "cylinder",
     "csg": "add",
     "location": [
-     -1696,
-     -6416,
+     -1344,
+     -5728,
      -9.0
     ],
     "radius": 73.53910524340094,
@@ -3288,12 +2570,12 @@
    }
   },
   {
-   "id": 148,
+   "id": 117,
    "kind": "light",
    "params": {
     "location": [
-     -1696,
-     -6416,
+     -1344,
+     -5728,
      56
     ],
     "brightness": 200,
@@ -3303,36 +2585,36 @@
    }
   },
   {
-   "id": 149,
+   "id": 118,
    "kind": "kicker",
    "params": {
     "location": [
-     -1696,
-     -3820,
+     -1340,
+     -4520,
      40
     ],
     "target": [
-     -1696,
-     -5120,
+     -1340,
+     -5720,
      0
     ],
     "velocity": [
      0.0,
-     -1022.37,
+     -943.73,
      603.99
     ],
     "apex": 192
    }
   },
   {
-   "id": 150,
+   "id": 119,
    "kind": "brush",
    "params": {
     "shape": "cylinder",
     "csg": "subtract",
     "location": [
-     -1696,
-     -3824,
+     -1344,
+     -4512,
      0.0
     ],
     "radius": 90.50966799187808,
@@ -3349,14 +2631,14 @@
    }
   },
   {
-   "id": 151,
+   "id": 120,
    "kind": "brush",
    "params": {
     "shape": "cylinder",
     "csg": "add",
     "location": [
-     -1696,
-     -3824,
+     -1344,
+     -4512,
      -9.0
     ],
     "radius": 73.53910524340094,
@@ -3381,12 +2663,12 @@
    }
   },
   {
-   "id": 152,
+   "id": 121,
    "kind": "light",
    "params": {
     "location": [
-     -1696,
-     -3824,
+     -1344,
+     -4512,
      56
     ],
     "brightness": 200,
@@ -3396,19 +2678,205 @@
    }
   },
   {
-   "id": 153,
+   "id": 122,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -1930,
+     -5120,
+     40
+    ],
+    "target": [
+     -1600,
+     -5000,
+     224
+    ],
+    "velocity": [
+     223.05,
+     81.11,
+     854.17
+    ],
+    "apex": 160
+   }
+  },
+  {
+   "id": 123,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -1936,
+     -5120,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 124,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -1936,
+     -5120,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 125,
+   "kind": "light",
+   "params": {
+    "location": [
+     -1936,
+     -5120,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 160,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 126,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -1600,
+     -5120,
+     264
+    ],
+    "target": [
+     -1600,
+     -4520,
+     0
+    ],
+    "velocity": [
+     0.0,
+     434.8,
+     493.15
+    ],
+    "apex": 128
+   }
+  },
+  {
+   "id": 127,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -1600,
+     -5120,
+     224.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 128,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -1600,
+     -5120,
+     215.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 129,
+   "kind": "light",
+   "params": {
+    "location": [
+     -1600,
+     -5120,
+     280
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 85,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 130,
    "kind": "brush",
    "params": {
     "shape": "box",
     "csg": "semisolid",
     "location": [
-     -3824.0,
+     -2032.0,
      -5120.0,
      8.0
     ],
     "size": [
      32,
-     2048,
+     512,
      16
     ],
     "texture": "UTtech1.Base.metals5",
@@ -3419,187 +2887,350 @@
    }
   },
   {
+   "id": 131,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -2150,
+     -5120,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 132,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -2150,
+     -5248,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 133,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -2150,
+     -4992,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 134,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "semisolid",
+    "location": [
+     -2640.0,
+     -5120.0,
+     8.0
+    ],
+    "size": [
+     32,
+     512,
+     16
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 135,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -2750,
+     -5120,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 136,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -2750,
+     -5248,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 137,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -2750,
+     -4992,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 138,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "semisolid",
+    "location": [
+     -3696.0,
+     -5120.0,
+     8.0
+    ],
+    "size": [
+     32,
+     512,
+     16
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 139,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -3800,
+     -5120,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 140,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -3800,
+     -5248,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 141,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -3800,
+     -4992,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 142,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3840,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 143,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3840,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 144,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2304,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 145,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2304,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 146,
+   "kind": "light",
+   "params": {
+    "location": [
+     -768,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 147,
+   "kind": "light",
+   "params": {
+    "location": [
+     -768,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 148,
+   "kind": "light",
+   "params": {
+    "location": [
+     768,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 149,
+   "kind": "light",
+   "params": {
+    "location": [
+     768,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 150,
+   "kind": "light",
+   "params": {
+    "location": [
+     2304,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 151,
+   "kind": "light",
+   "params": {
+    "location": [
+     2304,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 152,
+   "kind": "light",
+   "params": {
+    "location": [
+     3712,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 153,
+   "kind": "light",
+   "params": {
+    "location": [
+     3712,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
    "id": 154,
-   "kind": "light",
-   "params": {
-    "location": [
-     -3840,
-     -6272,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 155,
-   "kind": "light",
-   "params": {
-    "location": [
-     -3840,
-     -3968,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 156,
-   "kind": "light",
-   "params": {
-    "location": [
-     -2304,
-     -6272,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 157,
-   "kind": "light",
-   "params": {
-    "location": [
-     -2304,
-     -3968,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 158,
-   "kind": "light",
-   "params": {
-    "location": [
-     -768,
-     -6272,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 159,
-   "kind": "light",
-   "params": {
-    "location": [
-     -768,
-     -3968,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 160,
-   "kind": "light",
-   "params": {
-    "location": [
-     768,
-     -6272,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 161,
-   "kind": "light",
-   "params": {
-    "location": [
-     768,
-     -3968,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 162,
-   "kind": "light",
-   "params": {
-    "location": [
-     2304,
-     -6272,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 163,
-   "kind": "light",
-   "params": {
-    "location": [
-     2304,
-     -3968,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 164,
-   "kind": "light",
-   "params": {
-    "location": [
-     3712,
-     -6272,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 165,
-   "kind": "light",
-   "params": {
-    "location": [
-     3712,
-     -3968,
-     1120
-    ],
-    "brightness": 150,
-    "radius": 72,
-    "hue": 0,
-    "saturation": 255
-   }
-  },
-  {
-   "id": 166,
    "kind": "zone",
    "params": {
     "type": "normal",
@@ -3610,45 +3241,6 @@
      640.0
     ],
     "ambient_brightness": 24
-   }
-  },
-  {
-   "id": 167,
-   "kind": "playerstart",
-   "params": {
-    "location": [
-     -4096,
-     -5120,
-     40
-    ],
-    "yaw": 0,
-    "team": 0
-   }
-  },
-  {
-   "id": 168,
-   "kind": "playerstart",
-   "params": {
-    "location": [
-     -4096,
-     -5312,
-     40
-    ],
-    "yaw": 0,
-    "team": 0
-   }
-  },
-  {
-   "id": 169,
-   "kind": "playerstart",
-   "params": {
-    "location": [
-     -4096,
-     -4928,
-     40
-    ],
-    "yaw": 0,
-    "team": 0
    }
   }
  ]

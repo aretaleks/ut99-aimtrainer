@@ -13,8 +13,10 @@ its firing line at x = FIRE_X and runs downrange along +x:
   - High Ground (y around +HALL_DY): platforms of different heights over a pit,
     joined by ramps, laid out in the Close / Mid / Far distance bands; the
     firing deck is raised (DECK_Z), so there are targets below and above;
-  - Airborne (y around -HALL_DY): kicker pads on both sides of the hall, four
-    per distance band (the game sets each kick's arc).
+  - Airborne (y around -HALL_DY): one field of kicker pads of every type (cross
+    pads on both sides, a lift pad up onto a ledge, a pad on the ledge) for all
+    distances: the Range setting picks one of three firing spots, 550 / 1150 /
+    2200 from the field's centre (the game sets each kick's arc).
 ATGame tells the halls apart by y (ATGame.CourseOfY).
 """
 import os
@@ -44,7 +46,8 @@ FIRE_X = -4096
 HALL_DY = 5120       # the other halls' centres are at y = +-HALL_DY
 PIT = -256           # High Ground: the pit floor
 DECK_Z = 224         # High Ground: the firing deck is raised, so some platforms are below the trainee
-DECK_D = 256         # High Ground: the firing deck reaches this far downrange
+DECK_D = 96          # High Ground: the firing deck reaches this far downrange (near the edge, so
+                     # its lip doesn't hide the low platforms close by)
 
 # High Ground platforms per distance band: (d0, d1) downrange of the firing line,
 # then a row across the hall: ("p", y0, y1, top) a platform, ("r", y0, y1, low, high,
@@ -75,16 +78,17 @@ PLATFORM_BANDS = [
     ]),
 ]
 
-# Airborne kicker pads, four per distance band: two depths, both sides of the
-# hall, (d, y) with d downrange of the firing line. Each one's distance from the
-# firing spot is inside its band (Close 350-750, Mid 800-1500, Far 1600-2800).
-# The map's KickVelocity is only a default: the game sets a new arc for every
-# kick, towards a pad across the hall in the same band.
-KICKER_PADS = [
-    (420, 300), (620, 380),        # Close: 516, 727
-    (900, 650), (1250, 700),       # Mid: 1110, 1433
-    (1900, 1200), (2400, 1300),    # Far: 2247, 2729
-]
+# Airborne: one pad field for every distance, centred on x = FIELD_X; the
+# trainee stands at one of the firing spots FIELD_X - d (Close, Mid, Far: the
+# middle of each range band). (x, y) relative to the field's centre.
+FIELD_X = -1600
+AIR_SPOTS = [550, 1150, 2200]
+LEDGE = (-192, 192, -224, 224, 224)   # x0, x1, y0, y1, top: a raised block in the middle
+# pad types by light colour: cross pads orange, the lift pad blue, the ledge pad green
+CROSS_PADS = [(-220, -600), (-220, 600), (260, -600), (260, 600)]
+LIFT_PAD = (-330, 0)
+LEDGE_PAD = (0, 0)
+HUE_CROSS, HUE_LIFT, HUE_LEDGE = 30, 160, 85
 
 
 def hall(cy, floor_z=0):
@@ -110,9 +114,9 @@ def starts(cy, z=0):
         print(S.add_player_start(FIRE_X, cy + y, z, yaw=0))
 
 
-def fire_line(cy, z=0):
+def fire_line(cy, z=0, d=256):
     # a low line on the floor at the firing position (semisolid strip, 16 high)
-    print(S.add_box([FIRE_X + 256, cy - 1024, z], [FIRE_X + 288, cy + 1024, z + 16], csg="semisolid", texture=TRIM))
+    print(S.add_box([FIRE_X + d, cy - 1024, z], [FIRE_X + d + 32, cy + 1024, z + 16], csg="semisolid", texture=TRIM))
 
 
 def high_ground(cy):
@@ -136,10 +140,25 @@ def high_ground(cy):
 
 
 def airborne(cy):
-    for d, y in KICKER_PADS:
-        for side in (-1, 1):
-            # default arc: to the middle of the hall
-            print(S.add_kicker(FIRE_X + d, cy + side * y, 0, [FIRE_X + d, cy, 0], apex=192, pad="inset", light=True))
+    x0, x1, y0, y1, top = LEDGE
+    print(S.add_box([FIELD_X + x0, cy + y0, 0], [FIELD_X + x1, cy + y1, top], csg="add",
+                    floor_texture=FLOOR, wall_texture=TRIM))
+    # default arcs only: the game sets a new one for every kick
+    for x, y in CROSS_PADS:
+        print(S.add_kicker(FIELD_X + x, cy + y, 0, [FIELD_X + x, cy - y, 0], apex=192, pad="inset",
+                           light=True, light_hue=HUE_CROSS))
+    x, y = LIFT_PAD
+    print(S.add_kicker(FIELD_X + x, cy + y, 0, [FIELD_X, cy + 120, top], apex=160, pad="inset",
+                       light=True, light_hue=HUE_LIFT))
+    x, y = LEDGE_PAD
+    print(S.add_kicker(FIELD_X + x, cy + y, top, [FIELD_X, cy + 600, 0], apex=128, pad="inset",
+                       light=True, light_hue=HUE_LEDGE))
+    # the firing spots: a short line in front of each, three starts on it
+    for d in AIR_SPOTS:
+        fx = FIELD_X - d
+        print(S.add_box([fx + 96, cy - 256, 0], [fx + 128, cy + 256, 16], csg="semisolid", texture=TRIM))
+        for y in (0, -128, 128):
+            print(S.add_player_start(fx, cy + y, 0, yaw=0))
 
 
 def main():
@@ -158,7 +177,7 @@ def main():
     # High Ground
     hall(HALL_DY, PIT)
     high_ground(HALL_DY)
-    fire_line(HALL_DY, DECK_Z)
+    fire_line(HALL_DY, DECK_Z, 32)
     lights(HALL_DY)
     print(S.add_zone([0, HALL_DY, H / 2], type="normal", name="HighGround", ambient_brightness=24))
     starts(HALL_DY, DECK_Z)
@@ -166,10 +185,8 @@ def main():
     # Airborne
     hall(-HALL_DY)
     airborne(-HALL_DY)
-    fire_line(-HALL_DY)
     lights(-HALL_DY)
     print(S.add_zone([0, -HALL_DY, H / 2], type="normal", name="Airborne", ambient_brightness=24))
-    starts(-HALL_DY)
 
     print(S.analyze_map())
     result = S.build_map(NAME + ".unr", lighting=True, paths="define", overwrite=True)

@@ -12,7 +12,7 @@ They always aim at you, hardly ever jump, and never run straight at you.
 
 Three courses on the range map: **Flat Range**, **High Ground** (platforms
 above and below you) and **Airborne** (targets dodge onto kicker pads and fly
-across the hall).
+across the field; only targets in the air can be hit).
 
 ## Download and play
 
@@ -63,7 +63,7 @@ highscores in `System\AimTrainer.ini` stay).
 | Position | **Fixed**: you stand at the firing line and targets move downrange (within about 45°). **Free roam**: move around as in a game (on DM-AimRange targets still appear and stay down the range from you; on other maps they appear where you look) |
 | Movement | **Recorded**: real players (default). **Synthetic**: made-up movement. **Mixed**: both |
 | Range | Close, Mid, Far |
-| Course | DM-AimRange only. **Flat Range**: the flat hall. **High Ground**: platforms of different heights over a pit, joined by ramps; you stand on a raised deck, so targets are below and above you. Targets walk the ramps between platforms and never step or dodge off an edge. **Airborne**: targets dodge to kicker pads (dodge after dodge, facing the pad), fly across the hall facing you again, land and go for the next pad. Every flight has a different arc: low and fast or high and slow, straight across or diagonal |
+| Course | DM-AimRange only. **Flat Range**: the flat hall. **High Ground**: platforms of different heights over a pit, joined by ramps; you stand on a raised deck, so targets are below and above you. Targets walk the ramps between platforms and never step or dodge off an edge, and never appear on your deck. **Airborne**: one field of kicker pads for every range: the range picks where you stand (550, 1150 or 2200 from the field). Cross pads on both sides (orange), a lift pad up onto a ledge (blue) and a pad on the ledge (green). Targets dodge to a pad (dodge after dodge, facing it), then fly facing you again: across the field, diagonally, on a high lob, up onto the ledge or down from it. Every flight has a different arc. **Only targets flying from a pad can be hit**: shots at a target on the floor go through it and count as misses |
 
 Score is the damage you deal (a kill is 100). Accuracy is hits / shots. Your
 best 10 results for each combination of settings are kept in
@@ -81,9 +81,9 @@ Console commands for key binds: `mutate at help`.
 
 **DM-AimRange** has three long, evenly lit halls, one per course, each with
 the firing position at one end and pillars along the walls every 1024 uu for
-judging distance. In every course the platforms or pads are laid out for each
-range (Close, Mid, Far), so the Range setting means the same distance
-everywhere. Each course keeps its own best scores.
+judging distance. Range means the same distance everywhere: on High Ground
+there are platforms in each range band, on Airborne you stand at that distance
+from the pad field. Each course keeps its own best scores.
 
 ## How the movement was made
 

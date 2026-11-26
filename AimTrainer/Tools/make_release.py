@@ -33,7 +33,7 @@ replayed from about 3 hours of recorded movement of real players in iCTF
 matches (strafes, circle strafes, ADAD, dodges, the odd crouch). Shoot them
 for a timed session, with your accuracy, kills, headshots and best scores.
 Three courses: Flat Range, High Ground (platforms above and below you) and
-Airborne (targets fly off kicker pads).
+Airborne (targets fly off kicker pads; only targets in the air count).
 
 
 INSTALL AND PLAY
@@ -73,8 +73,10 @@ Fire           start a session (3-2-1), and again after the results.
 
 Course    (DM-AimRange) Flat Range: the flat hall.
           High Ground: platforms above and below you, joined by ramps.
-          Airborne: targets dodge onto kicker pads and fly across.
-          Close / Mid / Far mean the same distances in every course.
+          Airborne: targets dodge onto kicker pads and fly across
+          the field; only targets flying from a pad can be hit.
+          Close / Mid / Far mean the same distances in every course
+          (on Airborne: where you stand in front of the pad field).
 Mode      Duel: targets die and come back elsewhere.
           Tracking: they never die; score damage over time.
 Position  Fixed: you stand at the firing line and the targets move
