@@ -37,6 +37,7 @@ highscores in `System\AimTrainer.ini` stay).
     Enforcer, Minigun, ...);
   - mode, range and position;
   - movement, session length and number of targets;
+  - mouse sensitivity (UT's own setting, applied as you type and saved);
   - target model (random, or a fixed model with its skin and face; installed
     custom models are listed too);
   - team colour, hit sound, the headshot announcer ("Head Shot!!" as in UT,

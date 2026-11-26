@@ -11,6 +11,7 @@ var UWindowSmallButton StartButton, CloseButton, LoadButton, UTMenuButton, MainM
 var UWindowCheckbox MenuAtStartCheck;
 var UWindowComboControl StanceCombo;
 var UWindowComboControl MapCombo;
+var UWindowEditControl SensEdit;
 var bool bUpdating;
 var string MeshName;
 var bool bMultiSkinned;
@@ -103,6 +104,17 @@ function Created()
 	TargetsCombo = AddCombo("Targets", "How many targets at once.", Y);
 	for ( i = 1; i <= 4; i++ )
 		TargetsCombo.AddItem(string(i), string(i));
+	Y += 24;
+
+	SensEdit = UWindowEditControl(CreateControl(class'UWindowEditControl', 10, Y, WinWidth - 20, 1));
+	SensEdit.SetText("Mouse sensitivity");
+	SensEdit.SetHelpText("Your mouse sensitivity, the same as in UT's Input options (saved to User.ini).");
+	SensEdit.SetFont(F_Normal);
+	SensEdit.SetNumericOnly(True);
+	SensEdit.SetNumericFloat(True);
+	SensEdit.SetMaxLength(8);
+	SensEdit.Align = TA_Left;
+	SensEdit.EditBoxWidth = 70;
 	Y += 32;
 
 	ModelCombo = AddCombo("Target model", "Random stock models, or always the same model.", Y);
@@ -224,6 +236,7 @@ function LoadCurrent()
 	HeadshotCheck.bChecked = G.bHeadshotAnnouncer;
 	StreakCheck.bChecked = G.bStreakSound;
 	MenuAtStartCheck.bChecked = G.bMenuAtStart;
+	SensEdit.SetValue(SensText(GetPlayerOwner().MouseSensitivity));
 	Select(StanceCombo, string(G.Stance));
 	if ( G.TargetClass == "" || ModelCombo.FindItemIndex2(G.TargetClass, true) < 0 )
 		ModelCombo.SetSelectedIndex(0);
@@ -235,6 +248,35 @@ function LoadCurrent()
 	IterateFaces(SkinCombo.GetValue2());
 	if ( G.TargetFace != "" )
 		Select(FaceCombo, G.TargetFace);
+}
+
+// Sensitivity as text, without trailing zeros (2.500000 -> 2.5).
+function string SensText( float F )
+{
+	local string S;
+
+	S = string(F);
+	if ( InStr(S, ".") < 0 )
+		return S;
+	while ( Right(S, 1) == "0" )
+		S = Left(S, Len(S) - 1);
+	if ( Right(S, 1) == "." )
+		S = Left(S, Len(S) - 1);
+	return S;
+}
+
+// Typed a sensitivity: apply it at once and save it as UT does (SetSensitivity).
+// Ignores 0 and half-typed values such as "" or "0.", which would freeze the mouse.
+function SensChanged( ATGame G )
+{
+	local float F;
+
+	F = float(SensEdit.GetValue());
+	if ( F <= 0 || F == GetPlayerOwner().MouseSensitivity )
+		return;
+	GetPlayerOwner().UpdateSensitivity(F);
+	if ( !G.bTestMode )
+		GetPlayerOwner().SaveConfig();
 }
 
 // The model changed: list its skins (and faces), hidden for Random.
@@ -374,6 +416,11 @@ function Notify( UWindowDialogControl C, byte E )
 	if ( E != DE_Change )
 		return;
 
+	if ( C == SensEdit )
+	{
+		SensChanged(G);
+		return;
+	}
 	bUpdating = true;
 	if ( C == ModeCombo )
 		G.Mode = int(ModeCombo.GetValue2());

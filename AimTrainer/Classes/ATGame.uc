@@ -1290,7 +1290,7 @@ function UWindowWindow CreateMenuWindow( UWindowRootWindow Root )
 	if ( bTestMode )
 		Log("ATTEST menu window created", 'ATTest');
 	return Root.CreateWindow(class'ATMenuWindow', Max(0, (Root.WinWidth - 420) / 2),
-		Max(0, (Root.WinHeight - 490) / 2), 420, 490, None, true);
+		Max(0, (Root.WinHeight - 514) / 2), 420, 514, None, true);
 }
 
 // Esc opens the Aim Trainer window instead of UT's menu (see ATEscHook).

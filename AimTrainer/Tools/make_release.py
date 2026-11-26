@@ -62,7 +62,7 @@ IN THE GAME
 Esc            the Aim Trainer window (instead of UT's menu):
                  map, weapon (Enhanced Shock Rifle / Sniper / ...), mode,
                  range, position, movement, session length, number of
-                 targets, target model (random or a fixed model with skin
+                 targets, mouse sensitivity, target model (random or a fixed model with skin
                  and face), team colour, hit sound, headshot announcer,
                  kill streak sound.
                  Buttons: Start, UT Menu (UT's own menu), Main Menu,
