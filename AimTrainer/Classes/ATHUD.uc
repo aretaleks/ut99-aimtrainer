@@ -194,7 +194,7 @@ function DrawTopScores( canvas C, ATGame G, bool bResults )
 	X = C.ClipX * 0.70;
 	Y = C.ClipY * 0.30;
 	SetColor(C, 255, 200, 0);
-	Y += Line(C, "Your best (" $ G.ModeNames[G.Mode] $ ", " $ G.WeaponShortName() $ ", " $ G.RangeNames[G.Range] $ ")", X, Y);
+	Y += Line(C, "Your best (" $ Repl(G.CourseText(), " | ", ", ") $ G.ModeNames[G.Mode] $ ", " $ G.WeaponShortName() $ ", " $ G.RangeNames[G.Range] $ ")", X, Y);
 	C.Font = MyFonts.GetSmallestFont(C.ClipX);
 	if ( N == 0 )
 	{

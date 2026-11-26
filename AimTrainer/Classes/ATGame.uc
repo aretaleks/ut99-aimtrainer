@@ -23,6 +23,7 @@ var() config int    Mode;          // 0 = Duel (targets die and respawn), 1 = Tr
 var() config int    Stance;        // 0 = free roam, 1 = fixed: stand in place, targets downrange
 var() config string TrainWeapon;   // weapon class the player gets
 var() config int    Range;         // 0 Close, 1 Mid, 2 Far
+var() config int    Course;        // DM-AimRange's hall: 0 Flat Range, 1 High Ground (platforms), 2 Airborne (kickers)
 var() config int    Duration;      // session length in seconds
 var() config int    NumTargets;    // targets at once (1-4)
 var() config int    MoveSource;    // 0 Recorded (demo clips), 1 Synthetic, 2 Mixed
@@ -52,6 +53,7 @@ var string TopScores[10];
 // ---- Static data ---------------------------------------------------------------
 var string ModeNames[2];
 var string RangeNames[3];
+var string CourseNames[3];
 var string MoveNames[3];
 var float  RangeMin[3], RangeMax[3];
 var string WeaponList[12];
@@ -101,6 +103,9 @@ var float StreakTime;      // seconds (with a target up) since the last kill
 var float StreakSoundAt;   // Level.TimeSeconds of the last streak chime
 var Sound StreakSounds[4];
 var bool  bRangeMap;     // on DM-AimRange: downrange is +X (yaw 0) wherever the trainee stands
+var Kicker Pads[16];      // Airborne: the kicker pads of its hall
+var int    NumPads;
+var() config float MaxKickSpeed;  // Airborne: fastest sideways speed of a pad's arc (uu/s)
 var float TestLogTime;
 var string StatusMsg;       // short message for the HUD (settings changes etc)
 var float  StatusTime;
@@ -137,6 +142,8 @@ event InitGame( string Options, out string Error )
 	if ( S != "" ) Mode = Clamp(int(S), 0, 1);
 	S = ParseOption(Options, "ATRange");
 	if ( S != "" ) Range = Clamp(int(S), 0, 2);
+	S = ParseOption(Options, "ATCourse");
+	if ( S != "" ) Course = Clamp(int(S), 0, 2);
 	S = ParseOption(Options, "ATTime");
 	if ( S != "" ) Duration = Clamp(int(S), 10, 600);
 	S = ParseOption(Options, "ATTargets");
@@ -165,6 +172,7 @@ function PostBeginPlay()
 	local ATMutator M;
 
 	Super.PostBeginPlay();
+	FindPads();
 	M = Spawn(class'ATMutator');
 	M.Game = self;
 	if ( BaseMutator != None )
@@ -177,6 +185,7 @@ function ClampSettings()
 {
 	Mode = Clamp(Mode, 0, 1);
 	Range = Clamp(Range, 0, 2);
+	Course = Clamp(Course, 0, 2);
 	Duration = Clamp(Duration, 10, 600);
 	NumTargets = Clamp(NumTargets, 1, 4);
 	MoveSource = Clamp(MoveSource, 0, 2);
@@ -322,6 +331,7 @@ function Tick( float Delta )
 		bStartMenuShown = true;
 		OpenMenu(Trainee);
 	}
+	KeepInCourse();
 	ApplyStance();
 	NoShakeNoShells();
 	TrackShots();
@@ -421,6 +431,13 @@ function TestTick( float Delta )
 	if ( TestLogTime < 0.05 )
 		return;
 	TestLogTime = 0;
+	// One line per target, 20 times a second:
+	//   ATTEST time phase slot X Y Z hspeed vz accel physics anim useclip cliplen
+	//     dist dead health crouch synmode dodgelock towardsvel sidevel faceoffset
+	//     yaw-off-trainee ledgeturns kicked
+	// (speeds uu/s; dist horizontal to the trainee; yaw 0 = facing the trainee).
+	// Also ATLAUNCH name time dodge clip approach, ATLAND name time dodging kicked
+	// X Y Z, ATKICK time pad hspeed vz apex flight-time*100 partner.
 	for ( i = 0; i < 4; i++ )
 	{
 		T = Targets[i];
@@ -432,7 +449,8 @@ function TestTick( float Delta )
 			@ int(T.bDead) @ T.Health @ int(T.bCrouch) @ T.SynMode @ int(Level.TimeSeconds < T.DodgeLockUntil)
 			@ int(T.Velocity dot Normal((Trainee.Location - T.Location) * vect(1,1,0)))
 			@ int(T.Velocity dot (Normal((Trainee.Location - T.Location) * vect(1,1,0)) cross vect(0,0,1)))
-			@ T.FaceOffset @ ((T.Rotation.Yaw - rotator(Trainee.Location - T.Location).Yaw) & 65535), 'ATTest');
+			@ T.FaceOffset @ ((T.Rotation.Yaw - rotator(Trainee.Location - T.Location).Yaw) & 65535)
+			@ int(T.LedgeTurns) @ int(T.bKicked), 'ATTest');
 	}
 }
 
@@ -459,6 +477,258 @@ function NoShakeNoShells()
 	}
 	foreach AllActors(class'UT_ShellCase', Shell)
 		Shell.Destroy();
+}
+
+// ============================================================================
+// Courses (DM-AimRange's three halls, see AimTrainer/Map/make_range_map.py)
+// ============================================================================
+
+// The course in use: the halls only exist on DM-AimRange, other maps are flat.
+function int ActiveCourse()
+{
+	if ( bRangeMap )
+		return Course;
+	return 0;
+}
+
+// Which hall a point is in: they lie side by side along Y, 5120 apart.
+function int CourseOfY( float Y )
+{
+	if ( Y > 2560 )
+		return 1;
+	if ( Y < -2560 )
+		return 2;
+	return 0;
+}
+
+function float CourseCenterY( int C )
+{
+	if ( C == 1 )
+		return 5120;
+	if ( C == 2 )
+		return -5120;
+	return 0;
+}
+
+function bool InCourse( vector V )
+{
+	return CourseOfY(V.Y) == ActiveCourse();
+}
+
+// Players start at the firing line of the chosen course's hall.
+function NavigationPoint FindPlayerStart( Pawn Player, optional byte InTeam, optional string incomingName )
+{
+	local PlayerStart P, Pick;
+	local int N;
+
+	if ( bRangeMap )
+	{
+		foreach AllActors(class'PlayerStart', P)
+			if ( InCourse(P.Location) && Rand(++N) == 0 )
+				Pick = P;
+		if ( Pick != None )
+			return Pick;
+	}
+	return Super.FindPlayerStart(Player, InTeam, incomingName);
+}
+
+// The trainee is always in the chosen hall: after a course change, and after
+// falling into High Ground's pit, back to its firing line.
+function KeepInCourse()
+{
+	local NavigationPoint N;
+
+	if ( !bRangeMap )
+		return;
+	if ( InCourse(Trainee.Location) && !(ActiveCourse() == 1 && Trainee.Location.Z < -100) )
+		return;
+	N = FindPlayerStart(Trainee);
+	if ( N == None || !InCourse(N.Location) )
+		return;
+	RemoveTargets();
+	Trainee.SetLocation(N.Location);
+	Trainee.Velocity = vect(0,0,0);
+	Trainee.SetPhysics(PHYS_Falling);
+	Trainee.ClientSetRotation(N.Rotation);
+	bFixedSet = false;   // the firing spot is taken again where it lands
+	if ( Phase == SP_Running || Phase == SP_Countdown )
+		StopSession();
+}
+
+// Airborne: the hall's kicker pads (placed by the map, their arcs set here).
+function FindPads()
+{
+	local Kicker K;
+
+	NumPads = 0;
+	if ( !bRangeMap )
+		return;
+	foreach AllActors(class'Kicker', K)
+		if ( CourseOfY(K.Location.Y) == 2 && NumPads < ArrayCount(Pads) )
+			Pads[NumPads++] = K;
+}
+
+// Horizontal distance from Origin (the firing spot, or the trainee) within the
+// range band, give or take Slack?
+function bool InBand( vector V, vector Origin, float Slack )
+{
+	local float D;
+
+	D = VSize((V - Origin) * vect(1,1,0));
+	return D > RangeMin[Range] * (1 - Slack) && D < RangeMax[Range] * (1 + Slack);
+}
+
+// Airborne: is V downrange by a distance in the range band? Pads belong to a
+// band by how far down the range they are, wherever along the firing line the
+// trainee stands.
+function bool DownrangeInBand( vector V )
+{
+	local vector Origin;
+	local int Yaw;
+	local float D;
+
+	if ( !DownrangeAxis(Origin, Yaw) )
+	{
+		Origin = Trainee.Location;
+		Yaw = 0;
+	}
+	D = (V - Origin) dot vector(rot(0,1,0) * Yaw);
+	return D >= RangeMin[Range] && D <= RangeMax[Range];
+}
+
+// Airborne: the pad nearest to V among those in the range band (None if none).
+function Kicker NearestPad( vector V )
+{
+	local int i;
+	local float D, BestD;
+	local Kicker Best;
+
+	BestD = 1000000;
+	for ( i = 0; i < NumPads; i++ )
+	{
+		if ( !DownrangeInBand(Pads[i].Location) )
+			continue;
+		D = VSize((Pads[i].Location - V) * vect(1,1,0));
+		if ( D < BestD )
+		{
+			BestD = D;
+			Best = Pads[i];
+		}
+	}
+	return Best;
+}
+
+// Airborne: a pad across the hall from K in the range band, picked at random
+// (straight across or diagonally, towards or away from the trainee).
+function Kicker PartnerPad( Kicker K )
+{
+	local int i, N;
+	local Kicker Pick;
+
+	for ( i = 0; i < NumPads; i++ )
+		if ( (Pads[i].Location.Y - CourseCenterY(2)) * (K.Location.Y - CourseCenterY(2)) < 0
+			&& DownrangeInBand(Pads[i].Location) && Rand(++N) == 0 )
+			Pick = Pads[i];
+	return Pick;
+}
+
+// Airborne: a new arc for K, set just before a target steps on it, so no two
+// flights are the same. It lands between half way and just short of a pad
+// across, a little up or down the range (staying in the band), on a low and
+// fast or a high and slow arc, no faster than MaxKickSpeed sideways (a long,
+// flat arc gets higher instead). Solved for the zone's gravity; the kickers
+// kill the old velocity (bKillVelocity), so the arc is exact.
+function AimKick( Kicker K )
+{
+	local Kicker P;
+	local vector From, To;
+	local float Apex, Top, Vz, T, G, H;
+
+	P = PartnerPad(K);
+	if ( P == None )
+		return;
+	From = K.Location;
+	To = From + (P.Location - From) * (0.5 + FRand() * 0.4);
+	To.X += (FRand() - 0.5) * 500;
+	if ( !DownrangeInBand(To) )
+		To.X = From.X + (P.Location.X - From.X) * (To.Y - From.Y) / (P.Location.Y - From.Y);
+	To.Z = P.Location.Z;
+	Apex = 64 + FRand() * FRand() * 640;
+	G = Abs(K.Region.Zone.ZoneGravity.Z);
+	if ( G < 100 )
+		G = 950;
+	Top = FMax(From.Z, To.Z) + Apex;
+	Vz = Sqrt(2 * G * (Top - From.Z));
+	T = Vz / G + Sqrt(2 * (Top - To.Z) / G);
+	H = VSize((To - From) * vect(1,1,0));
+	if ( H / T > MaxKickSpeed )
+	{
+		T = H / MaxKickSpeed;
+		Vz = (To.Z - From.Z) / T + 0.5 * G * T;
+	}
+	K.KickVelocity.X = (To.X - From.X) / T;
+	K.KickVelocity.Y = (To.Y - From.Y) / T;
+	K.KickVelocity.Z = Vz;
+	K.bKillVelocity = true;
+	if ( bTestMode )
+		Log("ATKICK" @ Level.TimeSeconds @ K.Name @ int(VSize(K.KickVelocity * vect(1,1,0))) @ int(Vz)
+			@ int(Vz * Vz / (2 * G)) @ int(T * 100) @ P.Name, 'ATTest');
+}
+
+// A spot on a course. High Ground: the flat top of a platform in the range
+// band (not a ramp, not near an edge, not the pit). Airborne: the floor beside
+// a pad in the band. False if none was found (the caller falls back).
+function bool FindCourseSpot( out vector Spot, vector Eye, vector Origin, int AxisYaw )
+{
+	local int Try, Dir;
+	local vector Axis, Side, Cand, HitLoc, HitNorm, H2, N2;
+	local float Fwd, Lat;
+	local Kicker K;
+
+	Axis = vector(rot(0,1,0) * AxisYaw);
+	Side = Axis cross vect(0,0,1);
+	for ( Try = 0; Try < 120; Try++ )
+	{
+		if ( ActiveCourse() == 2 )
+		{
+			if ( NumPads == 0 )
+				return false;
+			K = Pads[Rand(NumPads)];
+			if ( !DownrangeInBand(K.Location) )
+				continue;
+			// beside the pad, towards the middle of the hall
+			Cand = K.Location + Normal((CourseCenterY(2) - K.Location.Y) * vect(0,1,0)) * (120 + FRand() * 250)
+				+ (FRand() - 0.5) * 300 * vect(1,0,0);
+		}
+		else
+		{
+			Fwd = RangeMin[Range] + FRand() * (RangeMax[Range] - RangeMin[Range]);
+			Lat = (FRand() * 2 - 1) * FMax(Fwd * 0.9, 300);
+			Cand = Origin + Axis * Fwd + Side * Lat;
+		}
+		Cand.Z = 1100;
+		if ( Trace(HitLoc, HitNorm, Cand - vect(0,0,1500), Cand, false) == None || HitNorm.Z < 0.95 )
+			continue;
+		if ( ActiveCourse() == 1 )
+		{
+			if ( HitLoc.Z < -100 )
+				continue;   // the pit
+			// room all round: the same floor 80 out on each side
+			for ( Dir = 0; Dir < 4; Dir++ )
+			{
+				Cand = HitLoc + vect(0,0,8) + 80 * vector(rot(0,16384,0) * Dir);
+				if ( Trace(H2, N2, Cand - vect(0,0,40), Cand, false) == None || Abs(H2.Z - HitLoc.Z) > 4 )
+					break;
+			}
+			if ( Dir < 4 )
+				continue;
+		}
+		Spot = HitLoc + vect(0,0,40);
+		if ( !InCourse(Spot) || !FastTrace(Spot + vect(0,0,30), Eye) || TooCloseToTargets(Spot) )
+			continue;
+		return true;
+	}
+	return false;
 }
 
 // Fixed position: the trainee stands at the firing spot (aiming is free),
@@ -754,6 +1024,8 @@ function bool FindTargetSpot( out vector Spot )
 	MinD = RangeMin[Range];
 	MaxD = RangeMax[Range];
 	Eye = Trainee.Location + Trainee.EyeHeight * vect(0,0,1);
+	if ( bAxis && ActiveCourse() != 0 && FindCourseSpot(Spot, Eye, AxisOrigin, AxisYaw) )
+		return true;
 
 	for ( Try = 0; Try < 40; Try++ )
 	{
@@ -910,7 +1182,24 @@ function string WeaponShortName( optional string W )
 function string ScoreKey()
 {
 	return ModeNames[Mode] $ "/" $ WeaponShortName() $ "/" $ RangeNames[Range]
-		$ "/" $ Duration $ "s/" $ NumTargets $ "T/" $ MoveNames[EffectiveMoveSource()] $ StanceKey();
+		$ "/" $ Duration $ "s/" $ NumTargets $ "T/" $ MoveNames[EffectiveMoveSource()] $ StanceKey() $ CourseKey();
+}
+
+// Flat Range results keep their old key (no suffix).
+function string CourseKey()
+{
+	if ( ActiveCourse() == 1 )
+		return "/HighGround";
+	if ( ActiveCourse() == 2 )
+		return "/Airborne";
+	return "";
+}
+
+function string CourseText()
+{
+	if ( ActiveCourse() != 0 )
+		return CourseNames[ActiveCourse()] $ " | ";
+	return "";
 }
 
 function string StanceText()
@@ -1135,7 +1424,7 @@ function Command( string Cmd, PlayerPawn Sender )
 		Sender.ClientMessage("  mutate at menu   (settings window)");
 		Sender.ClientMessage("  mutate at start | stop");
 		Sender.ClientMessage("  mutate at mode [duel|tracking]       mutate at weapon [next|prev|<class>]");
-		Sender.ClientMessage("  mutate at range [close|mid|far]");
+		Sender.ClientMessage("  mutate at course [flat|highground|airborne] (DM-AimRange)  mutate at range [close|mid|far]");
 		Sender.ClientMessage("  mutate at time <seconds>  mutate at targets <1-4>  mutate at moves [recorded|synthetic|mixed]");
 		Sender.ClientMessage("  mutate at model [random|<class>]  mutate at team [red|blue|none]  mutate at hitsound  mutate at headshot  mutate at streak");
 		Sender.ClientMessage("  mutate at scores | resetscores");
@@ -1163,6 +1452,12 @@ function Command( string Cmd, PlayerPawn Sender )
 	if ( Verb ~= "mode" )
 	{
 		Mode = NextIndex(Arg, Mode, 2, ModeNames[0] $ "," $ ModeNames[1]);
+		bChanged = true;
+	}
+	else if ( Verb ~= "course" )
+	{
+		Course = NextIndex(Arg, Course, 3, "flat,highground,airborne");
+		RemoveTargets();
 		bChanged = true;
 	}
 	else if ( Verb ~= "range" || Verb ~= "dist" )
@@ -1290,7 +1585,7 @@ function UWindowWindow CreateMenuWindow( UWindowRootWindow Root )
 	if ( bTestMode )
 		Log("ATTEST menu window created", 'ATTest');
 	return Root.CreateWindow(class'ATMenuWindow', Max(0, (Root.WinWidth - 420) / 2),
-		Max(0, (Root.WinHeight - 514) / 2), 420, 514, None, true);
+		Max(0, (Root.WinHeight - 538) / 2), 420, 538, None, true);
 }
 
 // Esc opens the Aim Trainer window instead of UT's menu (see ATEscHook).
@@ -1368,7 +1663,7 @@ function string PickWeapon( string Arg )
 
 function string SettingsLine()
 {
-	return ModeNames[Mode] @ "|" @ WeaponShortName() @ "|" @ RangeNames[Range]
+	return CourseText() $ ModeNames[Mode] @ "|" @ WeaponShortName() @ "|" @ RangeNames[Range]
 		@ "|" @ Duration $ "s |" @ NumTargets @ "target(s) |" @ MoveNames[EffectiveMoveSource()] @ "moves" $ StanceText();
 }
 
@@ -1400,6 +1695,8 @@ defaultproperties
 	Stance=1
 	TrainWeapon="Botpack.SuperShockRifle"
 	Range=1
+	Course=0
+	MaxKickSpeed=1400
 	Duration=60
 	NumTargets=1
 	MoveSource=0
@@ -1427,6 +1724,9 @@ defaultproperties
 
 	ModeNames(0)="Duel"
 	ModeNames(1)="Tracking"
+	CourseNames(0)="Flat Range"
+	CourseNames(1)="High Ground"
+	CourseNames(2)="Airborne"
 	RangeNames(0)="Close"
 	RangeNames(1)="Mid"
 	RangeNames(2)="Far"

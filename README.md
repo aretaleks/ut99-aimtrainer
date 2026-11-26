@@ -10,6 +10,10 @@ Targets move with UT's own player physics: the same acceleration, braking, top
 speed, dodge (and the 0.35 s lock after landing) and air control as a player.
 They always aim at you, hardly ever jump, and never run straight at you.
 
+Three courses on the range map: **Flat Range**, **High Ground** (platforms
+above and below you) and **Airborne** (targets dodge onto kicker pads and fly
+across the hall).
+
 ## Download and play
 
 1. Get **AimTrainer.zip** from [Releases](../../releases) and unzip it anywhere.
@@ -33,6 +37,7 @@ highscores in `System\AimTrainer.ini` stay).
 
 - **Esc** opens the Aim Trainer window instead of UT's menu. It has:
   - map (with a Load button);
+  - course (on DM-AimRange): Flat Range, High Ground, Airborne;
   - weapon (Enhanced Shock Rifle / InstaGib, Sniper Rifle, Shock Rifle,
     Enforcer, Minigun, ...);
   - mode, range and position;
@@ -58,6 +63,7 @@ highscores in `System\AimTrainer.ini` stay).
 | Position | **Fixed**: you stand at the firing line and targets move downrange (within about 45°). **Free roam**: move around as in a game (on DM-AimRange targets still appear and stay down the range from you; on other maps they appear where you look) |
 | Movement | **Recorded**: real players (default). **Synthetic**: made-up movement. **Mixed**: both |
 | Range | Close, Mid, Far |
+| Course | DM-AimRange only. **Flat Range**: the flat hall. **High Ground**: platforms of different heights over a pit, joined by ramps; you stand on a raised deck, so targets are below and above you. Targets walk the ramps between platforms and never step or dodge off an edge. **Airborne**: targets dodge to kicker pads (dodge after dodge, facing the pad), fly across the hall facing you again, land and go for the next pad. Every flight has a different arc: low and fast or high and slow, straight across or diagonal |
 
 Score is the damage you deal (a kill is 100). Accuracy is hits / shots. Your
 best 10 results for each combination of settings are kept in
@@ -73,8 +79,11 @@ headshot, 45 for the body.
 
 Console commands for key binds: `mutate at help`.
 
-**DM-AimRange** is a long, flat, evenly lit hall with the firing position at
-one end and pillars along the walls every 1024 uu for judging distance.
+**DM-AimRange** has three long, evenly lit halls, one per course, each with
+the firing position at one end and pillars along the walls every 1024 uu for
+judging distance. In every course the platforms or pads are laid out for each
+range (Close, Mid, Far), so the Range setting means the same distance
+everywhere. Each course keeps its own best scores.
 
 ## How the movement was made
 

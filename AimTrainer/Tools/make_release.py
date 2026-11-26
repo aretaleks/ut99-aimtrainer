@@ -32,6 +32,8 @@ Targets are player models that move like real players: their movement is
 replayed from about 3 hours of recorded movement of real players in iCTF
 matches (strafes, circle strafes, ADAD, dodges, the odd crouch). Shoot them
 for a timed session, with your accuracy, kills, headshots and best scores.
+Three courses: Flat Range, High Ground (platforms above and below you) and
+Airborne (targets fly off kicker pads).
 
 
 INSTALL AND PLAY
@@ -60,15 +62,19 @@ You can also start it from the game: Practice Session, game type
 IN THE GAME
 -----------
 Esc            the Aim Trainer window (instead of UT's menu):
-                 map, weapon (Enhanced Shock Rifle / Sniper / ...), mode,
-                 range, position, movement, session length, number of
-                 targets, mouse sensitivity, target model (random or a fixed model with skin
-                 and face), team colour, hit sound, headshot announcer,
-                 kill streak sound.
+                 map, course, weapon (Enhanced Shock Rifle / Sniper / ...),
+                 mode, range, position, movement, session length, number
+                 of targets, mouse sensitivity, target model (random or a
+                 fixed model with skin and face), team colour, hit sound,
+                 headshot announcer, kill streak sound.
                  Buttons: Start, UT Menu (UT's own menu), Main Menu,
                  Exit UT, Resume.
 Fire           start a session (3-2-1), and again after the results.
 
+Course    (DM-AimRange) Flat Range: the flat hall.
+          High Ground: platforms above and below you, joined by ramps.
+          Airborne: targets dodge onto kicker pads and fly across.
+          Close / Mid / Far mean the same distances in every course.
 Mode      Duel: targets die and come back elsewhere.
           Tracking: they never die; score damage over time.
 Position  Fixed: you stand at the firing line and the targets move

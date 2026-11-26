@@ -39,6 +39,8 @@ by `atpaths.py`.
   - `ATEscHook`: makes Esc open that window instead of UT's menu.
   - `ATSuperShockRifle`: InstaGib rifle that reports its shots.
   - `ATMutator`.
+- `AimTrainer/Map/make_range_map.py` builds DM-AimRange (three halls) with the
+  mapping install's generator.
 - `ATRecorder`: a udemo console that records player movement from demos. It
   runs in `Rec469e/`, a 469e copy, because 469f crashes on demos from
   NPLoader servers.
@@ -70,6 +72,7 @@ Options:
 - `?ATTestMenu=1`: opens the window (this pauses the game, so no session runs);
 - `?ATTestEsc=1`;
 - `?ATMoves=0|1|2`, `?ATStance=0|1`, `?ATTargets=1-4`, `?ATWeapon=<class>`;
+- `?ATCourse=0|1|2` (Flat Range, High Ground, Airborne), `?ATRange=0|1|2`;
 - `?ATCrouch=20`: 20× more crouches;
 - `?ATTestDuck=1`: keeps the hitbox crouched.
 
@@ -129,7 +132,19 @@ in a way no human does, it's wrong.
 - Front dodges are common: hold A/D and double-tap W.
 - Circle strafe means a small A-W-D-S loop around the target's own axis, not
   orbiting the player.
-- Targets always aim at (face) the trainee.
+- Targets always aim at (face) the trainee, except on the way to a kicker
+  pad (Airborne): they face the pad, and turn back to the trainee in the air.
+
+**Courses** (DM-AimRange's three halls)
+- Flat Range, High Ground (platforms over a pit, the firing deck raised so
+  targets are below and above), Airborne (kicker pads).
+- Close/Mid/Far mean the same distance in every course: platforms and pads are
+  laid out per band.
+- High Ground targets never walk, dodge or jump off a platform edge.
+- Players dodge to a pad, they don't walk: dodge after dodge with UT's
+  0.35 s lock plus a human delay.
+- Every kick has a new arc (low and fast or high and slow, straight or
+  diagonal), at most 1400 uu/s sideways.
 
 **Animation**
 - Running animations play at a fixed rate of 1.0. In quick A-D strokes the

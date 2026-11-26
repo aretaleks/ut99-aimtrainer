@@ -84,6 +84,14 @@ var bool   bCrouch;         // ducked this tick (walks at walking speed, can't d
 var float  CrouchLeft;      // synthetic crouch: seconds left
 var float  DuckFraction;    // 0 standing .. 1 fully crouched: shrinks the hitbox (see AdjustHitLocation)
 var bool   bDodgeAfterCrouch;
+var float  LedgeTurns;       // High Ground: times it turned back at an edge (test log)
+
+// Airborne (kicker pads)
+var Kicker PadGoal;          // the pad it is running to
+var float  PadWait;          // seconds on the ground before it heads for a pad
+var bool   bPadAimed;        // the pad's arc has been set for this run
+var bool   bKicked;          // in the air from a pad: no keys, the arc is the pad's
+var float  PadDodgeAt;       // Level.TimeSeconds of the next dodge towards the pad
 
 // timing tables for synthetic movement (index 1 is used; the others are kept for tuning)
 var float  ADADMin[4], ADADMax[4];
@@ -151,6 +159,7 @@ function Setup( ATGame G, Pawn E, class<TournamentPlayer> MC, string SkinName, s
 	if ( FRand() < 0.5 )
 		SynDir = -1;
 	bMirror = FRand() < 0.5;
+	PadWait = 0.3 + FRand();
 	ResetLife();
 	NewSegment();
 	SetPhysics(PHYS_Falling);
@@ -203,6 +212,12 @@ function Tick( float Delta )
 		return;
 	}
 
+	// High Ground: down in the pit means it fell off; the game puts up a new one
+	if ( Game.ActiveCourse() == 1 && Location.Z < -100 && Physics == PHYS_Walking )
+	{
+		Relocate();
+		return;
+	}
 	FaceEnemy(Delta);
 	FlipCooldown -= Delta;
 	ApproachSwitch -= Delta;
@@ -353,6 +368,11 @@ function Tick( float Delta )
 		}
 	}
 
+	if ( Game.ActiveCourse() == 2 )
+		PadMove(Delta, World);
+	if ( Game.ActiveCourse() == 1 && Physics == PHYS_Walking )
+		AvoidLedges(World);
+
 	Speed = VSize(World);
 	// The engine caps an AI pawn's walking speed at GroundSpeed * DesiredSpeed
 	// (normally set by MoveTo); 0 would freeze it in place.
@@ -404,6 +424,12 @@ function Tick( float Delta )
 				LaunchZ = PendingDodgeZ;
 			}
 		}
+		if ( bWantLaunch && Game.ActiveCourse() == 1 && !SafeLaunch(World) )
+		{
+			// it would land in the pit: a player wouldn't take that dodge or jump
+			bWantLaunch = false;
+			bPendingDodge = false;
+		}
 		if ( bWantLaunch )
 		{
 			bCrouch = false;
@@ -423,13 +449,155 @@ function Tick( float Delta )
 	}
 	else if ( Physics == PHYS_Falling )
 	{
-		// in the air, the same keys; the engine applies UT's air control
-		if ( Speed > 120 )
+		// in the air, the same keys; the engine applies UT's air control.
+		// Flying from a pad, no keys: the pad's arc decides where it lands.
+		if ( bKicked )
+			Acceleration = vect(0,0,0);
+		else if ( Speed > 120 )
 			Acceleration = Normal(World * vect(1,1,0)) * AccelRate;
 		else
 			Acceleration = vect(0,0,0);
 	}
 	UpdateAnim(Delta);
+}
+
+// ============================================================================
+// Courses
+// ============================================================================
+
+// Is there floor a step ahead in direction Dir (no drop deeper than a step or
+// a ramp)?
+function bool FloorAhead( vector Dir, float Ahead )
+{
+	local vector P, HitLoc, HitNorm;
+
+	P = Location + Normal(Dir * vect(1,1,0)) * Ahead;
+	return Trace(HitLoc, HitNorm, P - (CollisionHeight + 64) * vect(0,0,1), P, false) != None;
+}
+
+// High Ground: never walk off a platform. The keys (and the way it is still
+// sliding) are checked a step ahead, plus the distance it takes to brake; at
+// an edge it turns back, as a player stops at a ledge and strafes the other
+// way.
+function AvoidLedges( out vector World )
+{
+	local float Ahead;
+	local vector V;
+
+	V = Velocity * vect(1,1,0);
+	Ahead = CollisionRadius + 24 + 0.12 * VSize(V);
+	if ( VSize(World * vect(1,1,0)) > 120 && !FloorAhead(World, Ahead) )
+	{
+		LedgeTurns += 1;
+		bMirror = !bMirror;
+		SynDir = -SynDir;
+		ApproachSide = -ApproachSide;
+		FlipCooldown = FMax(FlipCooldown, 0.3);
+		World = -World;
+		if ( !FloorAhead(World, Ahead) )
+			World = vect(0,0,0);    // a narrow spot: stop
+	}
+	else if ( VSize(V) > 150 && !FloorAhead(V, Ahead) && (World dot V) >= 0 )
+	{
+		// still sliding to the edge: brake
+		LedgeTurns += 1;
+		World = -Normal(V) * GroundSpeed;
+	}
+}
+
+// High Ground: does a dodge or jump in direction World land on a platform? It
+// lands about where it took off in height, after 2 * Vz / gravity. The floor
+// there (and a little further, for the slide) must be no higher than a step
+// above the take-off floor (a higher platform's side would stop it in the air
+// and drop it into the pit) and no lower than a short drop, with nothing in
+// the way.
+function bool SafeLaunch( vector World )
+{
+	local vector H, L;
+	local float Vz, T;
+
+	H = World * vect(1,1,0);
+	if ( VSize(H) > 1.8 * GroundSpeed )
+		H = Normal(H) * 1.8 * GroundSpeed;
+	if ( !bLaunchDodge )
+		H = Velocity * vect(1,1,0);
+	Vz = FMax(LaunchZ, 100);
+	T = 2 * Vz / 950 + 0.05;
+	L = Location + H * T;
+	if ( !FastTrace(L, Location) || !LandingFloor(L) )
+		return false;
+	L += Normal(H) * (CollisionRadius + 16);
+	return FastTrace(L, Location) && LandingFloor(L);
+}
+
+// Floor under L (at the target's centre height) between a short drop below
+// and a step above its feet now?
+function bool LandingFloor( vector L )
+{
+	local vector HitLoc, HitNorm;
+	local float Feet;
+
+	Feet = Location.Z - CollisionHeight;
+	if ( Trace(HitLoc, HitNorm, L - (CollisionHeight + 64) * vect(0,0,1), L + vect(0,0,32), false) == None )
+		return false;
+	return HitLoc.Z <= Feet + 24 && HitLoc.Z >= Feet - 64;
+}
+
+// Airborne: on the ground for a moment (moving as usual), then to the nearest
+// pad in the range band, which kicks it across the hall. Players don't walk to
+// a pad, they dodge to it: dodge after dodge towards it, each as soon as UT's
+// 0.35 s lock after landing allows plus a human moment, holding the keys
+// towards it in between; the last one lands on it or flies over it (the pad
+// catches a dodge too, it is that low). The pad's arc is set as the target
+// gets close (ATGame.AimKick), so each flight differs.
+function PadMove( float Delta, out vector World )
+{
+	local vector ToPad;
+
+	if ( bKicked || bDead )
+		return;
+	if ( Physics == PHYS_Falling )
+	{
+		// just kicked: the pad has thrown it up
+		if ( PadGoal != None && Velocity.Z > 300 && VSize((PadGoal.Location - Location) * vect(1,1,0)) < 150 )
+		{
+			bKicked = true;
+			PadGoal = None;
+			bPadAimed = false;
+		}
+		return;
+	}
+	if ( Physics != PHYS_Walking || FreezeTime > 0 )
+		return;
+	PadWait -= Delta;
+	if ( PadWait > 0 )
+		return;
+	if ( PadGoal == None )
+		PadGoal = Game.NearestPad(Location);
+	if ( PadGoal == None )
+		return;
+	ToPad = (PadGoal.Location - Location) * vect(1,1,0);
+	if ( VSize(ToPad) < 450 && !bPadAimed )
+	{
+		bPadAimed = true;
+		Game.AimKick(PadGoal);
+	}
+	bCrouch = false;
+	bPendingDodge = false;
+	if ( VSize(ToPad) > 70 && Level.TimeSeconds >= PadDodgeAt && Level.TimeSeconds >= DodgeLockUntil )
+	{
+		// a UT dodge straight at the pad
+		World = Normal(ToPad) * 1.5 * GroundSpeed;
+		bWantLaunch = true;
+		bLaunchDodge = true;
+		LaunchZ = 160;
+	}
+	else
+	{
+		// keys held towards it while the dodge lock runs out (or the last step)
+		World = Normal(ToPad) * GroundSpeed;
+		bWantLaunch = false;
+	}
 }
 
 // How long the next strafe to one side may last.
@@ -460,6 +628,10 @@ function FaceEnemy( float Delta )
 	// looks), +-16384 looks to one side (circle strafes)
 	Want = rotator(Enemy.Location - Location);
 	Want.Yaw += FaceOffset;
+	// Airborne: on the way to a pad it looks where it goes (and dodges forward
+	// onto it); once kicked it turns back to the trainee in the air
+	if ( PadGoal != None && !bKicked && !bDead )
+		Want = rotator(PadGoal.Location - Location);
 	Cur = Rotation;
 	D = ((Want.Yaw - Cur.Yaw + 98304) & 65535) - 32768;
 	Cur.Yaw += Clamp(D, -100000 * Delta, 100000 * Delta);
@@ -886,7 +1058,12 @@ function Launch( vector World )
 event Landed( vector HitNormal )
 {
 	if ( Game != None && Game.bTestMode )
-		Log("ATLAND" @ Name @ Level.TimeSeconds @ int(bDodging), 'ATTest');
+		Log("ATLAND" @ Name @ Level.TimeSeconds @ int(bDodging) @ int(bKicked) @ int(Location.X) @ int(Location.Y) @ int(Location.Z), 'ATTest');
+	if ( bKicked )
+	{
+		bKicked = false;
+		PadWait = 0.2 + FRand() * 0.6;
+	}
 	if ( bDodging )
 	{
 		// UT: landing from a dodge kills most of the speed
@@ -894,6 +1071,8 @@ event Landed( vector HitNormal )
 		Velocity.Y *= 0.1;
 		bDodging = false;
 		DodgeLockUntil = Level.TimeSeconds + 0.35;
+		// dodging to a pad: the next dodge as soon as allowed, plus a human moment
+		PadDodgeAt = DodgeLockUntil + 0.03 + FRand() * 0.15;
 		DodgeCooldown = 0.45 + FRand() * 0.6;
 		if ( bChainDodge )
 			DodgeCooldown = 0.36 + FRand() * 0.1;    // double dodge: as soon as UT allows
@@ -1245,6 +1424,10 @@ function Respawn()
 			Anchor = Spot;
 			SetRotation(rotator(Enemy.Location - Spot));
 			SetPhysics(PHYS_Falling);
+			PadGoal = None;
+			bPadAimed = false;
+			bKicked = false;
+			PadWait = 0.3 + FRand();
 			ResetLife();
 			NewSegment();
 			Game.PlayTeleportEffect(self, false, false);

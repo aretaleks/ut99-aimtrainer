@@ -68,8 +68,8 @@ Extra URL options:
 - `?ATTestMenu=1` opens the Aim Trainer window;
 - `?ATTestEsc=1` opens UT's menu the way Esc does, then Resume, several times;
 - `?ATTestFire=1` fires every 1.2 s and logs shots, hits and accuracy;
-- `?ATMoves=0|1|2`, `?ATStance=0|1`, `?ATTargets=1-4`, `?ATWeapon=<class>`
-  override settings;
+- `?ATMoves=0|1|2`, `?ATStance=0|1`, `?ATTargets=1-4`, `?ATWeapon=<class>`,
+  `?ATCourse=0|1|2`, `?ATRange=0|1|2` override settings;
 - `?ATCrouch=20` makes crouches 20x more frequent.
 - `?ATTestDuck=1` keeps every target's hitbox fully crouched (the model
   doesn't crouch); the log shows each shot tested against it.
@@ -118,6 +118,26 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
   - a strafe to one side lasts at most 0.9 s up to `MaxStrafeTime`;
   - in Fixed position, targets stay downrange within about 45°; on DM-AimRange
     they do in free roam too (from wherever the trainee stands, down +X).
+- Courses (DM-AimRange only; `ATGame.Course`):
+  - the map has three halls side by side along Y, 5120 apart (Flat Range at
+    0, High Ground at +5120, Airborne at -5120); `ATGame.CourseOfY` tells
+    them apart. The trainee starts at, and is kept in, the chosen hall's
+    firing line (`FindPlayerStart`, `KeepInCourse`; also after falling into
+    High Ground's pit);
+  - High Ground: spawn spots are found by tracing down onto flat platform
+    tops in the range band, away from edges. Targets check the floor a step
+    ahead of their keys and of their slide (`AvoidLedges`) and turn back at an
+    edge; a dodge or jump that would land in the pit isn't taken
+    (`SafeLaunch`). A target in the pit is replaced;
+  - Airborne: the map's `Kicker`s in that hall are the pads. A pad belongs to
+    a range by its distance downrange (along the firing direction). After a
+    short time on the ground a target dodges to the nearest pad in the band,
+    dodge after dodge (0.35 s lock after each landing plus 0.03-0.18 s),
+    facing the pad; just before, `ATGame.AimKick` sets that pad's
+    `KickVelocity` for a landing between half way and just short of a random
+    pad across the hall in the band, with a random apex and at most
+    `MaxKickSpeed` (1400 uu/s) sideways. In the air from a pad it presses no
+    keys and faces the trainee again.
 - Hitbox: IG+'s crouch rule in `AdjustHitLocation` (called by
   `Pawn.TraceShot`) and IG+'s Sniper headshot line in `HeadshotZ`.
 - Animations follow `TournamentPlayer.PlayRunning`, but the body turns to the
@@ -144,6 +164,8 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
 - `AimTrainer\Sounds`: the kill-streak chimes, made by `Tools\make_sounds.py`
   and imported into `AimTrainer.u` when it is compiled.
 - `AimTrainer\Map`: the range map's build script (UnrealEd MCP map generator)
-  and its project file.
+  and its project file. The generator's `ring` and `disc` kicker pads crash
+  its final save (in the editor camera's serialization); the map uses
+  `inset` pads.
 - `System\AimTrainer.int`, `System\AimTrainerMoves.ini`, `Maps\DM-AimRange.unr`:
   game files that the release packs (`AimTrainer.u` is built).

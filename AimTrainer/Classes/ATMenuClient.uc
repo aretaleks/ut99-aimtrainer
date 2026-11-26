@@ -11,6 +11,7 @@ var UWindowSmallButton StartButton, CloseButton, LoadButton, UTMenuButton, MainM
 var UWindowCheckbox MenuAtStartCheck;
 var UWindowComboControl StanceCombo;
 var UWindowComboControl MapCombo;
+var UWindowComboControl CourseCombo;
 var UWindowEditControl SensEdit;
 var bool bUpdating;
 var string MeshName;
@@ -59,7 +60,18 @@ function Created()
 	LoadButton = UWindowSmallButton(CreateControl(class'UWindowSmallButton', WinWidth - 74, Y, 64, 16));
 	LoadButton.SetText("Load");
 	LoadButton.SetHelpText("Switch to this map (your settings stay).");
-	Y += 32;
+	Y += 24;
+
+	CourseCombo = AddCombo("Course", "Flat Range: the open hall. High Ground: platforms above and below you. Airborne: targets fly off kicker pads. (DM-AimRange)", Y);
+	for ( i = 0; i < 3; i++ )
+		CourseCombo.AddItem(G.CourseNames[i], string(i));
+	if ( G.bRangeMap )
+		Y += 32;
+	else
+	{
+		CourseCombo.HideWindow();
+		Y += 8;
+	}
 
 	ModeCombo = AddCombo("Mode", "Duel: targets die and come back elsewhere. Tracking: they never die.", Y);
 	for ( i = 0; i < 2; i++ )
@@ -228,6 +240,7 @@ function LoadCurrent()
 	Select(ModeCombo, string(G.Mode));
 	Select(WeaponCombo, G.TrainWeapon);
 	Select(RangeCombo, string(G.Range));
+	Select(CourseCombo, string(G.Course));
 	Select(MovesCombo, string(G.MoveSource));
 	Select(TimeCombo, string(G.Duration));
 	Select(TargetsCombo, string(G.NumTargets));
@@ -422,7 +435,12 @@ function Notify( UWindowDialogControl C, byte E )
 		return;
 	}
 	bUpdating = true;
-	if ( C == ModeCombo )
+	if ( C == CourseCombo )
+	{
+		G.Course = int(CourseCombo.GetValue2());
+		bLooks = true;     // new targets, in the new course's hall
+	}
+	else if ( C == ModeCombo )
 		G.Mode = int(ModeCombo.GetValue2());
 	else if ( C == WeaponCombo )
 	{
