@@ -9,7 +9,7 @@
   "portal_bias": 70
  },
  "gametype": "dm",
- "next_id": 33,
+ "next_id": 170,
  "elements": [
   {
    "id": 1,
@@ -639,6 +639,3012 @@
     "location": [
      -4096,
      192,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 33,
+   "kind": "brush",
+   "params": {
+    "shape": "prism",
+    "csg": "subtract",
+    "location": [
+     -256,
+     5120,
+     512.0
+    ],
+    "points": [
+     [
+      3968,
+      -2048
+     ],
+     [
+      4352,
+      -1664
+     ],
+     [
+      4352,
+      1664
+     ],
+     [
+      3968,
+      2048
+     ],
+     [
+      -3968,
+      2048
+     ],
+     [
+      -4352,
+      1664
+     ],
+     [
+      -4352,
+      -1664
+     ],
+     [
+      -3968,
+      -2048
+     ]
+    ],
+    "height": 1536,
+    "texture": "",
+    "face_textures": {
+     "bottom": "UTtech2.Floor.rClfFlr1x",
+     "top": "UTtech1.Ceiling.bmCeiling",
+     "sides": "UTtech1.Base.panelbase"
+    },
+    "group": "",
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 34,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3072.0,
+     3104.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 35,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3072.0,
+     7136.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 36,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2048.0,
+     3104.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 37,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2048.0,
+     7136.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 38,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1024.0,
+     3104.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 39,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1024.0,
+     7136.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 40,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     0.0,
+     3104.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 41,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     0.0,
+     7136.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 42,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     1024.0,
+     3104.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 43,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     1024.0,
+     7136.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 44,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     2048.0,
+     3104.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 45,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     2048.0,
+     7136.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 46,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     3072.0,
+     3104.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 47,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     3072.0,
+     7136.0,
+     512.0
+    ],
+    "size": [
+     128,
+     64,
+     1536
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 48,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -4224.0,
+     5120.0,
+     -16.0
+    ],
+    "size": [
+     768,
+     4096,
+     480
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 49,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3544.0,
+     4648.0,
+     -128.0
+    ],
+    "size": [
+     336,
+     304,
+     256
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 50,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3544.0,
+     4896.0,
+     -128.0
+    ],
+    "size": [
+     336,
+     192,
+     256
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 51,
+   "kind": "brush",
+   "params": {
+    "shape": "wedge",
+    "csg": "add",
+    "location": [
+     -3544.0,
+     4896.0,
+     48.0
+    ],
+    "size": [
+     192,
+     336,
+     96
+    ],
+    "yaw": 90,
+    "texture": "UTtech2.Floor.rClfFlr1x",
+    "group": "",
+    "route": "main"
+   }
+  },
+  {
+   "id": 52,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3544.0,
+     5152.0,
+     -80.0
+    ],
+    "size": [
+     336,
+     320,
+     352
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 53,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3544.0,
+     5416.0,
+     -80.0
+    ],
+    "size": [
+     336,
+     208,
+     352
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 54,
+   "kind": "brush",
+   "params": {
+    "shape": "wedge",
+    "csg": "add",
+    "location": [
+     -3544.0,
+     5416.0,
+     144.0
+    ],
+    "size": [
+     208,
+     336,
+     96
+    ],
+    "yaw": 90,
+    "texture": "UTtech2.Floor.rClfFlr1x",
+    "group": "",
+    "route": "main"
+   }
+  },
+  {
+   "id": 55,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3544.0,
+     5672.0,
+     -32.0
+    ],
+    "size": [
+     336,
+     304,
+     448
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 56,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2944.0,
+     4344.0,
+     48.0
+    ],
+    "size": [
+     608,
+     752,
+     608
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 57,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2944.0,
+     4848.0,
+     -16.0
+    ],
+    "size": [
+     608,
+     256,
+     480
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 58,
+   "kind": "brush",
+   "params": {
+    "shape": "wedge",
+    "csg": "add",
+    "location": [
+     -2944.0,
+     4848.0,
+     288.0
+    ],
+    "size": [
+     256,
+     608,
+     128
+    ],
+    "yaw": 270,
+    "texture": "UTtech2.Floor.rClfFlr1x",
+    "group": "",
+    "route": "main"
+   }
+  },
+  {
+   "id": 59,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2944.0,
+     5248.0,
+     -16.0
+    ],
+    "size": [
+     608,
+     544,
+     480
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 60,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2944.0,
+     5648.0,
+     -80.0
+    ],
+    "size": [
+     608,
+     256,
+     352
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 61,
+   "kind": "brush",
+   "params": {
+    "shape": "wedge",
+    "csg": "add",
+    "location": [
+     -2944.0,
+     5648.0,
+     160.0
+    ],
+    "size": [
+     256,
+     608,
+     128
+    ],
+    "yaw": 270,
+    "texture": "UTtech2.Floor.rClfFlr1x",
+    "group": "",
+    "route": "main"
+   }
+  },
+  {
+   "id": 62,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2944.0,
+     6024.0,
+     -80.0
+    ],
+    "size": [
+     608,
+     496,
+     352
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 63,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     3824.0,
+     0.0
+    ],
+    "size": [
+     1008,
+     608,
+     512
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 64,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     4264.0,
+     0.0
+    ],
+    "size": [
+     1008,
+     272,
+     512
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 65,
+   "kind": "brush",
+   "params": {
+    "shape": "wedge",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     4264.0,
+     336.0
+    ],
+    "size": [
+     272,
+     1008,
+     160
+    ],
+    "yaw": 90,
+    "texture": "UTtech2.Floor.rClfFlr1x",
+    "group": "",
+    "route": "main"
+   }
+  },
+  {
+   "id": 66,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     4712.0,
+     80.0
+    ],
+    "size": [
+     1008,
+     624,
+     672
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 67,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     5160.0,
+     0.0
+    ],
+    "size": [
+     1008,
+     272,
+     512
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 68,
+   "kind": "brush",
+   "params": {
+    "shape": "wedge",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     5160.0,
+     336.0
+    ],
+    "size": [
+     272,
+     1008,
+     160
+    ],
+    "yaw": 270,
+    "texture": "UTtech2.Floor.rClfFlr1x",
+    "group": "",
+    "route": "main"
+   }
+  },
+  {
+   "id": 69,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     5560.0,
+     0.0
+    ],
+    "size": [
+     1008,
+     528,
+     512
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 70,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     5992.0,
+     0.0
+    ],
+    "size": [
+     1008,
+     336,
+     512
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 71,
+   "kind": "brush",
+   "params": {
+    "shape": "wedge",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     5992.0,
+     352.0
+    ],
+    "size": [
+     336,
+     1008,
+     192
+    ],
+    "yaw": 90,
+    "texture": "UTtech2.Floor.rClfFlr1x",
+    "group": "",
+    "route": "main"
+   }
+  },
+  {
+   "id": 72,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1896.0,
+     6440.0,
+     96.0
+    ],
+    "size": [
+     1008,
+     560,
+     704
+    ],
+    "texture": "",
+    "face_textures": {
+     "top": "UTtech2.Floor.rClfFlr1x",
+     "sides": "UTtech1.Base.metals5"
+    },
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 73,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "semisolid",
+    "location": [
+     -3824.0,
+     5120.0,
+     232.0
+    ],
+    "size": [
+     32,
+     2048,
+     16
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 74,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3840,
+     3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 75,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3840,
+     6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 76,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2304,
+     3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 77,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2304,
+     6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 78,
+   "kind": "light",
+   "params": {
+    "location": [
+     -768,
+     3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 79,
+   "kind": "light",
+   "params": {
+    "location": [
+     -768,
+     6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 80,
+   "kind": "light",
+   "params": {
+    "location": [
+     768,
+     3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 81,
+   "kind": "light",
+   "params": {
+    "location": [
+     768,
+     6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 82,
+   "kind": "light",
+   "params": {
+    "location": [
+     2304,
+     3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 83,
+   "kind": "light",
+   "params": {
+    "location": [
+     2304,
+     6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 84,
+   "kind": "light",
+   "params": {
+    "location": [
+     3712,
+     3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 85,
+   "kind": "light",
+   "params": {
+    "location": [
+     3712,
+     6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 86,
+   "kind": "zone",
+   "params": {
+    "type": "normal",
+    "name": "HighGround",
+    "location": [
+     0,
+     5120,
+     640.0
+    ],
+    "ambient_brightness": 24
+   }
+  },
+  {
+   "id": 87,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     5120,
+     264
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 88,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     4928,
+     264
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 89,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     5312,
+     264
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 90,
+   "kind": "brush",
+   "params": {
+    "shape": "prism",
+    "csg": "subtract",
+    "location": [
+     -256,
+     -5120,
+     640.0
+    ],
+    "points": [
+     [
+      3968,
+      -2048
+     ],
+     [
+      4352,
+      -1664
+     ],
+     [
+      4352,
+      1664
+     ],
+     [
+      3968,
+      2048
+     ],
+     [
+      -3968,
+      2048
+     ],
+     [
+      -4352,
+      1664
+     ],
+     [
+      -4352,
+      -1664
+     ],
+     [
+      -3968,
+      -2048
+     ]
+    ],
+    "height": 1280,
+    "texture": "",
+    "face_textures": {
+     "bottom": "UTtech2.Floor.rClfFlr1x",
+     "top": "UTtech1.Ceiling.bmCeiling",
+     "sides": "UTtech1.Base.panelbase"
+    },
+    "group": "",
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 91,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3072.0,
+     -7136.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 92,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -3072.0,
+     -3104.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 93,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2048.0,
+     -7136.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 94,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -2048.0,
+     -3104.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 95,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1024.0,
+     -7136.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 96,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     -1024.0,
+     -3104.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 97,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     0.0,
+     -7136.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 98,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     0.0,
+     -3104.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 99,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     1024.0,
+     -7136.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 100,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     1024.0,
+     -3104.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 101,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     2048.0,
+     -7136.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 102,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     2048.0,
+     -3104.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 103,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     3072.0,
+     -7136.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 104,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "add",
+    "location": [
+     3072.0,
+     -3104.0,
+     640.0
+    ],
+    "size": [
+     128,
+     64,
+     1280
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 105,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -3676,
+     -5420,
+     40
+    ],
+    "target": [
+     -3676,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     235.93,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 106,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -3680,
+     -5424,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 107,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -3680,
+     -5424,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 108,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3680,
+     -5424,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 109,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -3676,
+     -4820,
+     40
+    ],
+    "target": [
+     -3676,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     -235.93,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 110,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -3680,
+     -4816,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 111,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -3680,
+     -4816,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 112,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3680,
+     -4816,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 113,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -3476,
+     -5500,
+     40
+    ],
+    "target": [
+     -3476,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     298.85,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 114,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -3472,
+     -5504,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 115,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -3472,
+     -5504,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 116,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3472,
+     -5504,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 117,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -3476,
+     -4740,
+     40
+    ],
+    "target": [
+     -3476,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     -298.85,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 118,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -3472,
+     -4736,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 119,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -3472,
+     -4736,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 120,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3472,
+     -4736,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 121,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -3196,
+     -5770,
+     40
+    ],
+    "target": [
+     -3196,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     511.19,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 122,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -3200,
+     -5776,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 123,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -3200,
+     -5776,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 124,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3200,
+     -5776,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 125,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -3196,
+     -4470,
+     40
+    ],
+    "target": [
+     -3196,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     -511.19,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 126,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -3200,
+     -4464,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 127,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -3200,
+     -4464,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 128,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3200,
+     -4464,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 129,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -2846,
+     -5820,
+     40
+    ],
+    "target": [
+     -2846,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     550.51,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 130,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -2848,
+     -5824,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 131,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -2848,
+     -5824,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 132,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2848,
+     -5824,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 133,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -2846,
+     -4420,
+     40
+    ],
+    "target": [
+     -2846,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     -550.51,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 134,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -2848,
+     -4416,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 135,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -2848,
+     -4416,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 136,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2848,
+     -4416,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 137,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -2196,
+     -6320,
+     40
+    ],
+    "target": [
+     -2196,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     943.73,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 138,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -2192,
+     -6320,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 139,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -2192,
+     -6320,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 140,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2192,
+     -6320,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 141,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -2196,
+     -3920,
+     40
+    ],
+    "target": [
+     -2196,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     -943.73,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 142,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -2192,
+     -3920,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 143,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -2192,
+     -3920,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 144,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2192,
+     -3920,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 145,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -1696,
+     -6420,
+     40
+    ],
+    "target": [
+     -1696,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     1022.37,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 146,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -1696,
+     -6416,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 147,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -1696,
+     -6416,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 148,
+   "kind": "light",
+   "params": {
+    "location": [
+     -1696,
+     -6416,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 149,
+   "kind": "kicker",
+   "params": {
+    "location": [
+     -1696,
+     -3820,
+     40
+    ],
+    "target": [
+     -1696,
+     -5120,
+     0
+    ],
+    "velocity": [
+     0.0,
+     -1022.37,
+     603.99
+    ],
+    "apex": 192
+   }
+  },
+  {
+   "id": 150,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "subtract",
+    "location": [
+     -1696,
+     -3824,
+     0.0
+    ],
+    "radius": 90.50966799187808,
+    "height": 32,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "bottom": "Mine.Base.MCMETL",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {},
+    "group": "KickerPads",
+    "face_fit": {}
+   }
+  },
+  {
+   "id": 151,
+   "kind": "brush",
+   "params": {
+    "shape": "cylinder",
+    "csg": "add",
+    "location": [
+     -1696,
+     -3824,
+     -9.0
+    ],
+    "radius": 73.53910524340094,
+    "height": 14,
+    "sides": 4,
+    "texture": "Mine.Base.MCMETL",
+    "face_textures": {
+     "top": "Atropos.Lights.sqAb",
+     "sides": "Mine.Base.MCMETL"
+    },
+    "face_flags": {
+     "top": 4194304
+    },
+    "group": "KickerPads",
+    "face_fit": {
+     "top": [
+      104,
+      128,
+      128
+     ]
+    }
+   }
+  },
+  {
+   "id": 152,
+   "kind": "light",
+   "params": {
+    "location": [
+     -1696,
+     -3824,
+     56
+    ],
+    "brightness": 200,
+    "radius": 6,
+    "hue": 30,
+    "saturation": 160
+   }
+  },
+  {
+   "id": 153,
+   "kind": "brush",
+   "params": {
+    "shape": "box",
+    "csg": "semisolid",
+    "location": [
+     -3824.0,
+     -5120.0,
+     8.0
+    ],
+    "size": [
+     32,
+     2048,
+     16
+    ],
+    "texture": "UTtech1.Base.metals5",
+    "face_textures": {},
+    "group": "",
+    "tex_scale": 1.0,
+    "face_flags": {}
+   }
+  },
+  {
+   "id": 154,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3840,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 155,
+   "kind": "light",
+   "params": {
+    "location": [
+     -3840,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 156,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2304,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 157,
+   "kind": "light",
+   "params": {
+    "location": [
+     -2304,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 158,
+   "kind": "light",
+   "params": {
+    "location": [
+     -768,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 159,
+   "kind": "light",
+   "params": {
+    "location": [
+     -768,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 160,
+   "kind": "light",
+   "params": {
+    "location": [
+     768,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 161,
+   "kind": "light",
+   "params": {
+    "location": [
+     768,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 162,
+   "kind": "light",
+   "params": {
+    "location": [
+     2304,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 163,
+   "kind": "light",
+   "params": {
+    "location": [
+     2304,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 164,
+   "kind": "light",
+   "params": {
+    "location": [
+     3712,
+     -6272,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 165,
+   "kind": "light",
+   "params": {
+    "location": [
+     3712,
+     -3968,
+     1120
+    ],
+    "brightness": 150,
+    "radius": 72,
+    "hue": 0,
+    "saturation": 255
+   }
+  },
+  {
+   "id": 166,
+   "kind": "zone",
+   "params": {
+    "type": "normal",
+    "name": "Airborne",
+    "location": [
+     0,
+     -5120,
+     640.0
+    ],
+    "ambient_brightness": 24
+   }
+  },
+  {
+   "id": 167,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     -5120,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 168,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     -5312,
+     40
+    ],
+    "yaw": 0,
+    "team": 0
+   }
+  },
+  {
+   "id": 169,
+   "kind": "playerstart",
+   "params": {
+    "location": [
+     -4096,
+     -4928,
      40
     ],
     "yaw": 0,
