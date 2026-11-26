@@ -120,7 +120,9 @@ python AimTrainer\Tools\make_clips.py --stats                  # writes System\A
     they do in free roam too (from wherever the trainee stands, down +X).
 - Hitbox: IG+'s crouch rule in `AdjustHitLocation` (called by
   `Pawn.TraceShot`) and IG+'s Sniper headshot line in `HeadshotZ`.
-- Animations follow `TournamentPlayer.PlayRunning`, but a running animation is
+- Animations follow `TournamentPlayer.PlayRunning`, but the body turns to the
+  other strafe side only after 0.45 s going that way (`SideFlipHold`), so
+  quick A-D strokes keep one torso side. Otherwise a running animation is
   only chosen again at the end of its cycle or after 0.2 s the other way, so
   quick taps don't flip the body.
 - A target that falls out of the level is replaced by the game. Such an actor

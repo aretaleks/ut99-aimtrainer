@@ -67,7 +67,10 @@ var int    CircleKey;        // circle strafe: which keys are held (0 W, 1 W+sid
 var float  CircleStep, CircleStepLeft;
 var int    FaceOffset;       // yaw added to 'look at the trainee' (see FaceEnemy); always 0: targets aim at the trainee
 var float  SlowTime;         // how long it has been (nearly) standing still
-var float  AnimMismatch;     // how long the running animation has been for the other direction   // how long each key is held, and what's left of it
+var bool   bSideRight;       // moving to the right of its body (last time it moved sideways)
+var float  SideHoldTime;     // how long it has kept moving to that side
+var float  SideFlipHold;     // strafe animation turns to the other side only after this long
+var float  AnimMismatch;    // how long the running animation has been for the other direction   // how long each key is held, and what's left of it
 var float  SideSign, SideRun, SideLimit;   // the side it is strafing to, for how long, and the limit
 var bool   bReplaceMe;
 var float  DeadSince;
@@ -915,7 +918,7 @@ event Landed( vector HitNormal )
 function UpdateAnim( float Delta )
 {
 	local name Want;
-	local float Spd;
+	local float Spd, Lat;
 
 	if ( Physics != PHYS_Walking )
 		return;
@@ -935,6 +938,18 @@ function UpdateAnim( float Delta )
 			TweenAnim(Want, 0.12);
 		return;
 	}
+	// how long it has kept going to the same side (left or right of its body)
+	Lat = Velocity dot (vect(0,0,1) cross vector(Rotation));
+	if ( Abs(Lat) >= 60 )
+	{
+		if ( (Lat > 0) != bSideRight )
+		{
+			bSideRight = Lat > 0;
+			SideHoldTime = 0;
+		}
+		else
+			SideHoldTime += Delta;
+	}
 	if ( IsAnimating() && (GetAnimGroup(AnimSequence) == 'Landing' || AnimSequence == 'Flip') && !bAnimLoop )
 		return;
 	// Standing still for a moment (not just the instant of an A <-> D switch).
@@ -950,10 +965,11 @@ function UpdateAnim( float Delta )
 	// Like UT for players: a running animation is only chosen again when its
 	// cycle ends (AnimEnd), so the body sometimes switches sides on an A <-> D
 	// tap, but not on every one.
-	// A quick tap doesn't flip it; going the new way for 0.2 s does.
+	// A quick tap doesn't flip it; going the new way for 0.2 s does, and for
+	// a switch between StrafeL and StrafeR, SideFlipHold (see ChooseRunAnim).
 	if ( bAnimLoop && IsRunAnim(AnimSequence) )
 	{
-		if ( Spd >= 60 && RunAnimFor(Spd) != AnimSequence )
+		if ( Spd >= 60 && ChooseRunAnim(Spd) != AnimSequence )
 		{
 			AnimMismatch += Delta;
 			if ( AnimMismatch > 0.2 )
@@ -998,7 +1014,22 @@ function PlayRunAnim( float Spd )
 	AnimMismatch = 0;
 	// a fixed rate, as for UT's players (a rate taken from the speed of the
 	// moment makes a whole cycle look slow after an A <-> D switch)
-	LoopAnim(RunAnimFor(Spd), 1.0, 0.1);
+	LoopAnim(ChooseRunAnim(Spd), 1.0, 0.1);
+}
+
+// The running animation to play: as RunAnimFor, but the body only turns to
+// the other strafe side once the target has kept going that way for
+// SideFlipHold seconds. In quick, short A-D strokes the torso stays on one
+// side, as players look; on wider moves it alternates.
+function name ChooseRunAnim( float Spd )
+{
+	local name Want;
+
+	Want = RunAnimFor(Spd);
+	if ( ((Want == 'StrafeL' && AnimSequence == 'StrafeR') || (Want == 'StrafeR' && AnimSequence == 'StrafeL'))
+		&& SideHoldTime < SideFlipHold )
+		return AnimSequence;
+	return Want;
 }
 
 // The running animation for the current direction (as TournamentPlayer.PlayRunning).
@@ -1263,6 +1294,7 @@ function Destroyed()
 
 defaultproperties
 {
+	SideFlipHold=0.45
 	ADADMin(0)=0.55
 	ADADMin(1)=0.32
 	ADADMin(2)=0.2
